@@ -1,14 +1,14 @@
 import {
-  Button,
-  HStack,
-  Heading,
-  IconButton,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-} from '@chakra-ui/react'
-import { AiOutlineShoppingCart } from 'react-icons/ai'
-import { Link } from 'react-router-dom'
+  Button,
+  Heading,
+  HStack,
+  IconButton,
+} from '@chakra-ui/react';
+import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 
 export const Header = () => {
   return (
@@ -39,5 +39,5 @@ export const Header = () => {
         ></IconButton>
       </HStack>
     </HStack>
-  )
-}
+  );
+};

@@ -1,6 +1,7 @@
-import { Flex, Stack } from '@chakra-ui/react'
-import { Footer } from '../components/Footer'
-import { Header } from '../components/Header'
+import { Flex, Stack } from '@chakra-ui/react';
+
+import { Footer } from '../components/Footer';
+import { Header } from '../components/Header';
 
 export const AppLayout = ({ children }) => {
   return (
@@ -12,5 +13,5 @@ export const AppLayout = ({ children }) => {
 
       <Footer />
     </Flex>
-  )
-}
+  );
+};

@@ -1,5 +1,5 @@
-import { Button, Heading, Text, VStack } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { Button, Heading, Text, VStack } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 export const Error404 = () => {
   return (
@@ -10,5 +10,5 @@ export const Error404 = () => {
         Volver al inicio
       </Button>
     </VStack>
-  )
-}
+  );
+};

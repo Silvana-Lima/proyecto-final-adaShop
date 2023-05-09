@@ -1,6 +1,7 @@
-import { AppLayout } from './layout/AppLayout'
-import { Route, Routes } from 'react-router-dom'
-import { Error404 } from './pages/Error404'
+import { Route, Routes } from 'react-router-dom';
+
+import { AppLayout } from './layout/AppLayout';
+import { Error404 } from './pages/Error404';
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
         </Routes>
       </AppLayout>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
