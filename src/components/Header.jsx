@@ -6,9 +6,12 @@ import {
   Heading,
   HStack,
   IconButton,
+  Show,
 } from '@chakra-ui/react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
+
+import { HamburguerMenu } from './HamburguerMenu';
 
 export const Header = () => {
   return (
@@ -17,19 +20,25 @@ export const Header = () => {
         <Heading as={'h1'} fontSize={'2xl'} pt={4} mr={5}>
           AdaShop
         </Heading>
-        <Breadcrumb pt={5}>
-          <BreadcrumbItem>
-            <BreadcrumbLink as={Link} to={'/'}>
-              Inicio
-            </BreadcrumbLink>
-          </BreadcrumbItem>
+        <Show below="sm">
+          <HamburguerMenu />
+        </Show>
 
-          <BreadcrumbItem>
-            <BreadcrumbLink as={Link} to={'/productos'}>
-              Productos
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-        </Breadcrumb>
+        <Show above="sm">
+          <Breadcrumb pt={5}>
+            <BreadcrumbItem>
+              <BreadcrumbLink as={Link} to={'/'}>
+                Inicio
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+
+            <BreadcrumbItem>
+              <BreadcrumbLink as={Link} to={'/productos'}>
+                Productos
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+          </Breadcrumb>
+        </Show>
       </HStack>
       <HStack>
         <Button>Iniciar Sesión</Button>
