@@ -5,19 +5,18 @@ import {
   Button,
   Heading,
   HStack,
-  IconButton,
   Show,
 } from '@chakra-ui/react';
-import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
+import { DrawerCart } from './DrawerCart';
 import { HamburguerMenu } from './HamburguerMenu';
 
 export const Header = () => {
   return (
-    <HStack justifyContent={'space-between'} p={5}>
+    <HStack justifyContent={'space-between'} p={5} bg={'#E2D784'}>
       <HStack>
-        <Heading as={'h1'} fontSize={'2xl'} pt={4} mr={5}>
+        <Heading as={'h1'} fontSize={['lg', '2xl']} pt={4} mr={4}>
           AdaShop
         </Heading>
         <Show below="sm">
@@ -41,11 +40,10 @@ export const Header = () => {
         </Show>
       </HStack>
       <HStack>
-        <Button>Iniciar Sesión</Button>
-        <IconButton
-          aria-label="Cart"
-          icon={<AiOutlineShoppingCart />}
-        ></IconButton>
+        <Button fontSize={['sm', 'md']} colorScheme="orange">
+          Iniciar Sesión
+        </Button>
+        <DrawerCart />
       </HStack>
     </HStack>
   );
