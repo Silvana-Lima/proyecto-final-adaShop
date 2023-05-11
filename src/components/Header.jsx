@@ -3,9 +3,10 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   Button,
-  Heading,
   HStack,
+  Image,
   Show,
+  Stack,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
@@ -14,11 +15,11 @@ import { HamburguerMenu } from './HamburguerMenu';
 
 export const Header = () => {
   return (
-    <HStack justifyContent={'space-between'} p={5} bg={'#E2D784'}>
+    <HStack justifyContent={'space-between'} p={5} bg={'teal.300'}>
       <HStack>
-        <Heading as={'h1'} fontSize={['lg', '2xl']} pt={4} mr={4}>
-          AdaShop
-        </Heading>
+        <Stack>
+          <Image src="../public/AdaShopLogoT.png" h={['60px', '100px']} />
+        </Stack>
         <Show below="sm">
           <HamburguerMenu />
         </Show>

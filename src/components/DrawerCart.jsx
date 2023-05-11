@@ -68,7 +68,9 @@ export const DrawerCart = () => {
                 <CardBody p={2}>
                   <Heading size="sm">Producto</Heading>
 
-                  <Text py="2">2 x $100</Text>
+                  <Text>
+                    Precio: $100 <br /> Cantidad: 1{' '}
+                  </Text>
                 </CardBody>
 
                 <CardFooter justifyContent={'end'}>
@@ -77,6 +79,7 @@ export const DrawerCart = () => {
                     icon={<DeleteIcon />}
                     variant="solid"
                     colorScheme="orange"
+                    size={'xs'}
                   ></IconButton>
                 </CardFooter>
               </Stack>
