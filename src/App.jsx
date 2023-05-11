@@ -4,6 +4,7 @@ import { AppLayout } from './layout/AppLayout';
 import { Error404 } from './pages/Error404';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
+import { ProductDetails } from './pages/ProductDetails';
 import { Products } from './pages/Products';
 import { RegisterUser } from './pages/RegisterUser';
 
@@ -16,6 +17,7 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<RegisterUser />} />
+          <Route path="/details" element={<ProductDetails />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
       </AppLayout>

@@ -39,7 +39,7 @@ export const ProductCard = () => {
             Ver Detalles
           </Button>
           <Button variant="ghost" colorScheme="teal">
-            Add to cart
+            Añadir al carrito
           </Button>
         </ButtonGroup>
       </CardFooter>
