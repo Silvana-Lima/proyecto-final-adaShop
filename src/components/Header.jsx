@@ -33,7 +33,7 @@ export const Header = () => {
             </BreadcrumbItem>
 
             <BreadcrumbItem>
-              <BreadcrumbLink as={Link} to={'/productos'}>
+              <BreadcrumbLink as={Link} to={'/products'}>
                 Productos
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -41,7 +41,12 @@ export const Header = () => {
         </Show>
       </HStack>
       <HStack>
-        <Button fontSize={['sm', 'md']} colorScheme="orange">
+        <Button
+          fontSize={['sm', 'md']}
+          colorScheme="orange"
+          as={Link}
+          to={'/login'}
+        >
           Iniciar Sesión
         </Button>
         <DrawerCart />
