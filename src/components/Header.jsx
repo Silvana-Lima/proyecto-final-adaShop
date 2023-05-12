@@ -17,8 +17,8 @@ export const Header = () => {
   return (
     <HStack justifyContent={'space-between'} p={5} bg={'teal.300'}>
       <HStack>
-        <Stack>
-          <Image src="../public/AdaShopLogoT.png" h={['60px', '100px']} />
+        <Stack as={Link} to={'/'}>
+          <Image src="/AdaShopLogo.png" h={['60px', '100px']} />
         </Stack>
         <Show below="sm">
           <HamburguerMenu />
@@ -33,7 +33,7 @@ export const Header = () => {
             </BreadcrumbItem>
 
             <BreadcrumbItem>
-              <BreadcrumbLink as={Link} to={'/products'}>
+              <BreadcrumbLink as={Link} to={'/products'} fontWeight={'bold'}>
                 Productos
               </BreadcrumbLink>
             </BreadcrumbItem>
