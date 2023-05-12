@@ -31,6 +31,7 @@ export const FormLogin = ({
             name="name"
             borderColor={'gray'}
             placeholder="Ingresar nombre"
+            id="name"
           />
         </Box>
         <Box>
@@ -40,6 +41,7 @@ export const FormLogin = ({
             name="password"
             borderColor={'gray'}
             placeholder="Ingresar contraseña"
+            id="password"
           />
         </Box>
         <Button type="submit" colorScheme="teal">

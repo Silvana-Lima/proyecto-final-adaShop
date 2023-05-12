@@ -1,12 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
 
 import { AppLayout } from './layout/AppLayout';
+import { RegisterUser } from './pages/auth/RegisterUser';
 import { Error404 } from './pages/Error404';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { ProductDetails } from './pages/ProductDetails';
 import { Products } from './pages/Products';
-import { RegisterUser } from './pages/RegisterUser';
 
 function App() {
   return (

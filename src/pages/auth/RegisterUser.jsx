@@ -1,6 +1,6 @@
 import { Container } from '@chakra-ui/react';
 
-import { FormLogin } from '../components/FormLogin';
+import { FormLogin } from '../../components/FormLogin';
 
 export const RegisterUser = () => {
   return (
