@@ -22,7 +22,7 @@ export const HamburguerMenu = () => {
         <MenuItem as={Link} to={'/'}>
           Inicio
         </MenuItem>
-        <MenuItem as={Link} to={'/productos'}>
+        <MenuItem as={Link} to={'/products'}>
           Productos
         </MenuItem>
       </MenuList>
