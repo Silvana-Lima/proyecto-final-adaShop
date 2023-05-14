@@ -1,19 +1,26 @@
+import { HamburgerIcon } from '@chakra-ui/icons';
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   Button,
   HStack,
+  Icon,
   Image,
   Show,
   Stack,
 } from '@chakra-ui/react';
+import { useContext } from 'react';
+import { AiOutlineUser } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
+import { userContext } from '../context/UserContext';
+import { ButtonMenu } from './ButtonMenu';
 import { DrawerCart } from './DrawerCart';
-import { HamburguerMenu } from './HamburguerMenu';
 
 export const Header = () => {
+  const { user, handleLogout } = useContext(userContext);
+
   return (
     <HStack justifyContent={'space-between'} p={5} bg={'teal.300'}>
       <HStack>
@@ -21,7 +28,15 @@ export const Header = () => {
           <Image src="/AdaShopLogo.png" h={['60px', '100px']} />
         </Stack>
         <Show below="sm">
-          <HamburguerMenu />
+          <ButtonMenu
+            icon={<HamburgerIcon />}
+            firstItem={'Inicio'}
+            secondItem={'Productos'}
+            scheme={'teal'}
+            variant={'outline'}
+            firstTo={'/'}
+            secondTo={'/products'}
+          />
         </Show>
 
         <Show above="sm">
@@ -41,14 +56,27 @@ export const Header = () => {
         </Show>
       </HStack>
       <HStack>
-        <Button
-          fontSize={['sm', 'md']}
-          colorScheme="orange"
-          as={Link}
-          to={'/login'}
-        >
-          Iniciar Sesión
-        </Button>
+        {!user ? (
+          <Button
+            fontSize={['sm', 'md']}
+            colorScheme="orange"
+            as={Link}
+            to={'/login'}
+          >
+            Iniciar Sesión
+          </Button>
+        ) : (
+          <ButtonMenu
+            icon={<Icon as={AiOutlineUser} />}
+            firstItem={'Mis pedidos'}
+            secondItem={'Cerrar sesión'}
+            scheme={'orange'}
+            variant={'solid'}
+            firstTo={'/orders'}
+            secondTo={'/'}
+            onClick={() => handleLogout()}
+          />
+        )}
         <DrawerCart />
       </HStack>
     </HStack>

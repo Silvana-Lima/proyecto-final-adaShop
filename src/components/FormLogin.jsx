@@ -7,9 +7,13 @@ import {
   Heading,
   Input,
 } from '@chakra-ui/react';
+// import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
 import { Link } from 'react-router-dom';
+
+// import { userContext } from '../context/UserContext';
+// import { registerUser } from '../services/auth';
 
 export const FormLogin = ({
   title,
@@ -17,16 +21,13 @@ export const FormLogin = ({
   subtitle,
   textButton,
   toLink,
+  functionOnsubmit,
 }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  const login = (data) => {
-    console.log(data);
-  };
 
   return (
     <Container>
@@ -35,7 +36,7 @@ export const FormLogin = ({
       </Heading>
       <form
         style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
-        onSubmit={handleSubmit(login)}
+        onSubmit={handleSubmit(functionOnsubmit)}
       >
         <FormControl isInvalid={errors.email}>
           <FormLabel htmlFor="email">Email</FormLabel>
