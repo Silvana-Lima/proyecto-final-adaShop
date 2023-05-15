@@ -1,6 +1,6 @@
-import { Container, Heading, SimpleGrid } from '@chakra-ui/react';
+import { Container, Heading } from '@chakra-ui/react';
 
-import { ProductCard } from '../components/ProductCard';
+import { Products } from '../components/Products';
 
 export const Home = () => {
   return (
@@ -24,9 +24,7 @@ export const Home = () => {
         <Heading as="h2" fontSize={['xl', '3xl']} mb={5} fontStyle={'italic'}>
           Productos destacados
         </Heading>
-        <SimpleGrid columns={[1, 3, 4]} spacing={'20px'}>
-          <ProductCard />
-        </SimpleGrid>
+        <Products />
       </Container>
     </>
   );

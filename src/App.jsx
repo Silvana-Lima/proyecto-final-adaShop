@@ -7,7 +7,7 @@ import { Error404 } from './pages/Error404';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { ProductDetails } from './pages/ProductDetails';
-import { Products } from './pages/Products';
+import { ProductsPage } from './pages/ProductsPage';
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         </Route>
         <Route element={<AppLayout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/products" element={<Products />} />
+          <Route path="/products" element={<ProductsPage />} />
           <Route path="/details" element={<ProductDetails />} />
           <Route path="*" element={<Error404 />} />
         </Route>
