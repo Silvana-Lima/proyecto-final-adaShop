@@ -28,6 +28,7 @@ export const UserProvider = ({ children }) => {
 
   const handleLogout = () => {
     setUser(null);
+    auth.signOut();
   };
 
   return (
