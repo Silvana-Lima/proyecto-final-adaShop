@@ -1,4 +1,3 @@
-import { Container } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,20 +11,18 @@ export const Login = () => {
 
   const onSubmit = async (data) => {
     const loginUser = await loginWithEmail(data);
-    handleUser(loginUser.user.email);
+    handleUser(loginUser);
 
     navigate('/products');
   };
   return (
-    <Container>
-      <FormLogin
-        title={'Iniciar Sesión'}
-        textButtonSubmit={'Ingresar'}
-        subtitle={'¿No tienes usuario? '}
-        textButton={'Regístrate'}
-        toLink={'/Register'}
-        functionOnsubmit={onSubmit}
-      />
-    </Container>
+    <FormLogin
+      title={'Iniciar Sesión'}
+      textButtonSubmit={'Ingresar'}
+      subtitle={'¿No tienes usuario? '}
+      textButton={'Regístrate'}
+      toLink={'/Register'}
+      functionOnsubmit={onSubmit}
+    />
   );
 };

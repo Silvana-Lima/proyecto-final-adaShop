@@ -23,6 +23,7 @@ export const Header = () => {
 
   return (
     <HStack justifyContent={'space-between'} p={5} bg={'teal.300'}>
+      <Button onClick={() => console.log(user)} />
       <HStack>
         <Stack as={Link} to={'/'}>
           <Image src="/AdaShopLogo.png" h={['60px', '100px']} />

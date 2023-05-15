@@ -1,4 +1,7 @@
-import { createContext, useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { createContext, useEffect, useState } from 'react';
+
+import { auth } from '../firebase/config';
 
 export const userContext = createContext();
 
@@ -7,13 +10,21 @@ export const UserProvider = ({ children }) => {
   // const [login, setLogin] = useState(false);
 
   const handleUser = (dataUser) => {
-    setUser(dataUser);
+    setUser({ email: dataUser.user.email, uid: dataUser.user.uid });
     console.log(user);
   };
 
-  // const handleLogin = () => {
-  //   setLogin(true);
-  // };
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        console.log(user.email);
+        setUser({ email: user.email, uid: uid });
+      } else {
+        console.log('no hay usuario');
+      }
+    });
+  }, []);
 
   const handleLogout = () => {
     setUser(null);
