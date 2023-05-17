@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { AppLayout } from './layout/AppLayout';
@@ -8,8 +9,23 @@ import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { ProductDetails } from './pages/ProductDetails';
 import { ProductsPage } from './pages/ProductsPage';
+import { getproducts } from './services/products';
 
 function App() {
+  const [allProducts, setAllProducts] = useState([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getproducts();
+
+      setAllProducts(data);
+    };
+
+    getData();
+  }, []);
+
+  console.log(allProducts);
+
   return (
     <>
       <Routes>
@@ -18,8 +34,11 @@ function App() {
           <Route path="/register" element={<RegisterUser />} />
         </Route>
         <Route element={<AppLayout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/" element={<Home allProducts={allProducts} />} />
+          <Route
+            path="/products"
+            element={<ProductsPage allProducts={allProducts} />}
+          />
           <Route path="/details" element={<ProductDetails />} />
           <Route path="*" element={<Error404 />} />
         </Route>

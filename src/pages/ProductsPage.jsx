@@ -1,9 +1,10 @@
 import { Heading, SimpleGrid } from '@chakra-ui/react';
 
+import { ProductCard } from '../components/ProductCard';
 import { ProductFilter } from '../components/ProductFilter';
-import { Products } from '../components/Products';
 
-export const ProductsPage = () => {
+export const ProductsPage = ({ allProducts }) => {
+  console.log(allProducts);
   return (
     <>
       <Heading as={'h2'} fontSize={['2xl', '3xl']}>
@@ -15,7 +16,11 @@ export const ProductsPage = () => {
         spacing={['10px', '10px', '30px', '50px']}
       >
         <ProductFilter />
-        <Products />
+        <SimpleGrid columns={[1, 3, 3]} spacing={['20px', '10px', '40px']}>
+          {allProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </SimpleGrid>
       </SimpleGrid>
     </>
   );

@@ -1,8 +1,8 @@
-import { Container, Heading } from '@chakra-ui/react';
+import { Container, Heading, SimpleGrid } from '@chakra-ui/react';
 
-import { Products } from '../components/Products';
+import { ProductCard } from '../components/ProductCard';
 
-export const Home = () => {
+export const Home = ({ allProducts }) => {
   return (
     <>
       <Container
@@ -24,7 +24,11 @@ export const Home = () => {
         <Heading as="h2" fontSize={['xl', '3xl']} mb={5} fontStyle={'italic'}>
           Productos destacados
         </Heading>
-        <Products />
+        <SimpleGrid columns={[1, 3, 3]} spacing={['20px', '10px', '40px']}>
+          {allProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </SimpleGrid>
       </Container>
     </>
   );
