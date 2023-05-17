@@ -13,18 +13,23 @@ import { getproducts } from './services/products';
 
 function App() {
   const [allProducts, setAllProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getproducts();
+      try {
+        const data = await getproducts();
 
-      setAllProducts(data);
+        setAllProducts(data);
+      } catch {
+        console.log('error');
+      } finally {
+        setLoading(false);
+      }
     };
 
     getData();
   }, []);
-
-  console.log(allProducts);
 
   return (
     <>
@@ -37,7 +42,9 @@ function App() {
           <Route path="/" element={<Home allProducts={allProducts} />} />
           <Route
             path="/products"
-            element={<ProductsPage allProducts={allProducts} />}
+            element={
+              <ProductsPage allProducts={allProducts} loading={loading} />
+            }
           />
           <Route path="/details" element={<ProductDetails />} />
           <Route path="*" element={<Error404 />} />
