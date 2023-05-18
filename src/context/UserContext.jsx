@@ -7,11 +7,9 @@ export const userContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  // const [login, setLogin] = useState(false);
 
   const handleUser = (dataUser) => {
     setUser({ email: dataUser.user.email, uid: dataUser.user.uid });
-    console.log(user);
   };
 
   useEffect(() => {

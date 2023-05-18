@@ -39,14 +39,20 @@ function App() {
           <Route path="/register" element={<RegisterUser />} />
         </Route>
         <Route element={<AppLayout />}>
-          <Route path="/" element={<Home allProducts={allProducts} />} />
+          <Route
+            path="/"
+            element={<Home allProducts={allProducts} loading={loading} />}
+          />
           <Route
             path="/products"
             element={
               <ProductsPage allProducts={allProducts} loading={loading} />
             }
           />
-          <Route path="/details" element={<ProductDetails />} />
+          <Route
+            path="/products/:id"
+            element={<ProductDetails allProducts={allProducts} />}
+          />
           <Route path="*" element={<Error404 />} />
         </Route>
       </Routes>

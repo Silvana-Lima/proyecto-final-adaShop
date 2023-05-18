@@ -1,11 +1,13 @@
 import {
   Box,
+  Flex,
   FormControl,
   FormLabel,
   Heading,
   Input,
   Select,
   SimpleGrid,
+  Spinner,
   Text,
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
@@ -73,7 +75,12 @@ export const ProductsPage = ({ allProducts, loading }) => {
             />
           </Box>
         </FormControl>
-        {loading && <p>cargandooooo</p>}
+        {loading && (
+          <Flex justify={'center'} align={'center'} direction={'column'}>
+            <Spinner size="lg" mb={5} />
+            <Text fontWeight={'bold'}>Cargando productos</Text>
+          </Flex>
+        )}
         <SimpleGrid columns={[1, 3, 3]} spacing={['20px', '10px', '40px']}>
           {!loading &&
             products &&

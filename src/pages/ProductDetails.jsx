@@ -7,17 +7,30 @@ import {
   SimpleGrid,
   Text,
 } from '@chakra-ui/react';
+import { useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 
-export const ProductDetails = () => {
+export const ProductDetails = ({ allProducts }) => {
+  const { id } = useParams();
+
+  const product = useMemo(
+    () => allProducts.find((p) => p.id === id),
+    [id, allProducts]
+  );
+
+  if (!product) {
+    return <div>Cargando...</div>;
+  }
+
   return (
     <Container maxW={'1200px'}>
       <Heading as={'h3'} fontSize={['xl', '3xl']} mb={5}>
-        Nombre del Producto
+        {product.name}
       </Heading>
       <SimpleGrid columns={[1, 2]} spacing={'40px'}>
         <Box>
           <Image
-            src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+            src={product.image}
             alt="Green double couch with wooden legs"
           />
         </Box>
@@ -25,14 +38,9 @@ export const ProductDetails = () => {
           <Heading as={'h5'} fontSize={'ms'} mb={5}>
             Características
           </Heading>
-          <Text mb={5}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Exercitationem dignissimos expedita ipsa natus nostrum soluta
-            voluptatum fugiat ad qui fuga cum dolore accusamus ducimus, rem
-            consequuntur inventore sit quod similique?
-          </Text>
+          <Text mb={5}>{product.description}</Text>
           <Text textAlign={'end'} fontWeight={'bold'} fontSize={'2xl'} mb={5}>
-            $15000
+            {`$${product.price}`}
           </Text>
           <Button colorScheme="orange">Añadir al carrito</Button>
         </Box>

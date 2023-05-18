@@ -10,6 +10,7 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 export const ProductCard = ({ product }) => {
   const { name, description, price, id, image } = product;
@@ -25,17 +26,23 @@ export const ProductCard = ({ product }) => {
           <Heading size="md">{name} </Heading>
           <Text>{description}</Text>
           <Text color="teal" fontSize="2xl">
-            {price}
+            {`$${price}`}
           </Text>
         </Stack>
       </CardBody>
       <Divider />
       <CardFooter>
         <ButtonGroup spacing="2">
-          <Button variant="solid" colorScheme="orange" id={id}>
+          <Button
+            variant="solid"
+            colorScheme="orange"
+            id={id}
+            as={Link}
+            to={`/products/${id}`}
+          >
             Ver Detalles
           </Button>
-          <Button variant="ghost" colorScheme="teal">
+          <Button variant="ghost" colorScheme="teal" id={id}>
             Añadir al carrito
           </Button>
         </ButtonGroup>
