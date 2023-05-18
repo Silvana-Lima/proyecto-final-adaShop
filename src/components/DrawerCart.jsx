@@ -26,7 +26,6 @@ import { AiOutlineShoppingCart } from 'react-icons/ai';
 export const DrawerCart = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
-
   return (
     <>
       <IconButton
