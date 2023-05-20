@@ -6,19 +6,15 @@ import {
   Image,
   SimpleGrid,
   Text,
-  useToast,
 } from '@chakra-ui/react';
-import { useContext, useState } from 'react';
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { cartContext } from '../context/CartContext';
 
 export const ProductDetails = ({ allProducts }) => {
   const { id } = useParams();
-  const { cart, addToCart } = useContext(cartContext);
-  const [quantity, setQuantity] = useState(1);
-  const toast = useToast();
+  const { addToCart } = useContext(cartContext);
 
   const product = useMemo(
     () => allProducts.find((p) => p.id === id),
@@ -31,27 +27,6 @@ export const ProductDetails = ({ allProducts }) => {
 
   const { name, description, price, image } = product;
 
-  const addProductToCart = () => {
-    setQuantity((prev) => prev + 1);
-
-    const productInTheCart = cart.find((p) => p.id === product.id);
-
-    if (productInTheCart) {
-      productInTheCart.quantity = productInTheCart.quantity + 1;
-    } else {
-      addToCart({
-        ...product,
-        quantity,
-      });
-    }
-
-    toast({
-      title: 'Producto agregado al carrito',
-      colorScheme: 'teal',
-      duration: 2000,
-      isClosable: true,
-    });
-  };
   return (
     <Container maxW={'1200px'}>
       <Heading as={'h3'} fontSize={['xl', '3xl']} mb={5}>
@@ -69,7 +44,7 @@ export const ProductDetails = ({ allProducts }) => {
           <Text textAlign={'end'} fontWeight={'bold'} fontSize={'2xl'} mb={5}>
             {`$${price}`}
           </Text>
-          <Button colorScheme="orange" onClick={addProductToCart}>
+          <Button colorScheme="orange" onClick={() => addToCart(product)}>
             Añadir al carrito
           </Button>
         </Box>

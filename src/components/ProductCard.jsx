@@ -9,42 +9,15 @@ import {
   Image,
   Stack,
   Text,
-  useToast,
 } from '@chakra-ui/react';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import { cartContext } from '../context/CartContext';
-import { setLocalStorage } from '../utils/localStorage';
 
 export const ProductCard = ({ product }) => {
   const { name, description, price, id, image } = product;
-  const { cart, addToCart } = useContext(cartContext);
-  const [quantity, setQuantity] = useState(1);
-  const toast = useToast();
-
-  const addProductToCart = () => {
-    setQuantity((prev) => prev + 1);
-
-    const productInTheCart = cart.find((p) => p.id === product.id);
-
-    if (productInTheCart) {
-      productInTheCart.quantity = productInTheCart.quantity + 1;
-      setLocalStorage('cart', cart);
-    } else {
-      addToCart({
-        ...product,
-        quantity,
-      });
-    }
-    toast({
-      title: 'Producto agregado al carrito',
-      colorScheme: 'teal',
-      duration: 2000,
-      isClosable: true,
-    });
-    console.log(cart);
-  };
+  const { addToCart } = useContext(cartContext);
 
   return (
     <Card maxW="xs">
@@ -79,7 +52,7 @@ export const ProductCard = ({ product }) => {
             colorScheme="teal"
             id={id}
             value={1}
-            onClick={addProductToCart}
+            onClick={() => addToCart(product)}
           >
             Añadir al carrito
           </Button>

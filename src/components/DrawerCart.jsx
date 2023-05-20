@@ -28,7 +28,8 @@ import { cartContext } from '../context/CartContext';
 export const DrawerCart = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
-  const { cart, deleteToCart, clearCart, total } = useContext(cartContext);
+  const { cart, deleteToCart, clearCart, priceTotalCart } =
+    useContext(cartContext);
 
   return (
     <>
@@ -99,7 +100,7 @@ export const DrawerCart = () => {
 
           <DrawerFooter pr={3}>
             <VStack>
-              <Text>{`Total $${total}`}</Text>
+              <Text>{`Total $${priceTotalCart}`}</Text>
               <Flex>
                 <Button
                   variant="outline"
