@@ -18,7 +18,7 @@ import { userContext } from '../context/UserContext';
 import { ButtonMenu } from './ButtonMenu';
 import { DrawerCart } from './DrawerCart';
 
-export const Header = () => {
+export const Header = ({ handleIsCheckingOut }) => {
   const { user, handleLogout } = useContext(userContext);
 
   return (
@@ -77,7 +77,7 @@ export const Header = () => {
             onClick={() => handleLogout()}
           />
         )}
-        <DrawerCart />
+        <DrawerCart handleIsCheckingOut={handleIsCheckingOut} />
       </HStack>
     </HStack>
   );

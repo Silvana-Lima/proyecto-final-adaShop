@@ -74,6 +74,7 @@ export const Checkout = () => {
                 placeholder="Ingresar email"
                 id="email"
                 value={user && user.email}
+                readOnly
               />
             </FormControl>
             <FormControl isInvalid={errors.direction} borderColor={'gray'}>

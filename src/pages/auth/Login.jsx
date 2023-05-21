@@ -16,7 +16,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { userContext } from '../../context/UserContext';
 import { loginWithEmail, registerUser } from '../../services/auth';
 
-export const Login = () => {
+export const Login = ({ isCheckingOut }) => {
   const { handleUser } = useContext(userContext);
   const navigate = useNavigate();
   const {
@@ -25,17 +25,26 @@ export const Login = () => {
     formState: { errors },
   } = useForm();
   const [existingUser, setExistingUser] = useState(true);
+  console.log(isCheckingOut);
 
   const loginUser = async (data) => {
     const loginUser = await loginWithEmail(data);
     handleUser(loginUser);
-    navigate('/products');
+    if (isCheckingOut) {
+      navigate('/checkout');
+    } else {
+      navigate('/products');
+    }
   };
 
   const createUser = async (data) => {
     const newUser = await registerUser(data);
     handleUser(newUser);
-    navigate('/products');
+    if (isCheckingOut) {
+      navigate('/checkout');
+    } else {
+      navigate('/products');
+    }
   };
 
   return (
