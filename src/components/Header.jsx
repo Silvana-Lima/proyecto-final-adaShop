@@ -72,7 +72,7 @@ export const Header = ({ handleIsCheckingOut }) => {
             secondItem={'Cerrar sesión'}
             scheme={'orange'}
             variant={'solid'}
-            firstTo={'/my-account'}
+            firstTo={'/my-account/orders'}
             secondTo={'/'}
             onClick={() => handleLogout()}
           />

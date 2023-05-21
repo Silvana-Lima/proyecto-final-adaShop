@@ -13,7 +13,7 @@ import { useContext } from 'react';
 
 import { cartContext } from '../context/CartContext';
 
-export const CartCard = ({ size, width, product }) => {
+export const CartProductCard = ({ size, width, product, deleteButton }) => {
   const { deleteToCart } = useContext(cartContext);
   const { name, price, image, id, quantity } = product;
   return (
@@ -39,17 +39,19 @@ export const CartCard = ({ size, width, product }) => {
           </Text>
         </CardBody>
 
-        <CardFooter justifyContent={'end'}>
-          <IconButton
-            aria-label="Cart"
-            icon={<DeleteIcon />}
-            variant="solid"
-            colorScheme="orange"
-            size={'xs'}
-            id={id}
-            onClick={() => deleteToCart(id)}
-          ></IconButton>
-        </CardFooter>
+        {deleteButton && (
+          <CardFooter justifyContent={'end'}>
+            <IconButton
+              aria-label="Cart"
+              icon={<DeleteIcon />}
+              variant="solid"
+              colorScheme="orange"
+              size={'xs'}
+              id={id}
+              onClick={() => deleteToCart(id)}
+            ></IconButton>
+          </CardFooter>
+        )}
       </Stack>
     </Card>
   );

@@ -18,7 +18,7 @@ import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
 import { cartContext } from '../context/CartContext';
-import { CartCard } from './CartProductCard';
+import { CartProductCard } from './CartProductCard';
 
 export const DrawerCart = ({ handleIsCheckingOut }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -50,7 +50,12 @@ export const DrawerCart = ({ handleIsCheckingOut }) => {
             {!cart.length && <Text>No hay productos en el carrito.</Text>}
             {cart &&
               cart.map((product) => (
-                <CartCard size={'sm'} product={product} key={product.id} />
+                <CartProductCard
+                  size={'sm'}
+                  product={product}
+                  key={product.id}
+                  deleteButton
+                />
               ))}
           </DrawerBody>
 

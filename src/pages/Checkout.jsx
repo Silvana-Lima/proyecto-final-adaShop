@@ -13,7 +13,7 @@ import {
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { CartCard } from '../components/CartProductCard';
+import { CartProductCard } from '../components/CartProductCard';
 import { cartContext } from '../context/CartContext';
 import { userContext } from '../context/UserContext';
 
@@ -39,10 +39,11 @@ export const Checkout = () => {
         <GridItem w={'100%'}>
           {cart &&
             cart.map((product) => (
-              <CartCard
+              <CartProductCard
                 width={{ base: '330px', md: '330px', lg: '500px' }}
                 product={product}
                 key={product.id}
+                deleteButton
               />
             ))}
         </GridItem>

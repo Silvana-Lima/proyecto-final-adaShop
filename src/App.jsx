@@ -9,6 +9,7 @@ import { Checkout } from './pages/Checkout';
 import { Error404 } from './pages/Error404';
 import { Home } from './pages/Home';
 import { MyAccount } from './pages/MyAccount';
+import { Orders } from './pages/Orders';
 import { ProductDetails } from './pages/ProductDetails';
 import { ProductsPage } from './pages/ProductsPage';
 import { getproducts } from './services/products';
@@ -69,7 +70,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/my-account" element={<MyAccount />}>
-              <Route path="orders" element={<Error404 />} />
+              <Route path="orders" element={<Orders />} />
             </Route>
           </Route>
         </Route>
