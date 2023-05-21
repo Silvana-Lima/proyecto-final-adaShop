@@ -22,11 +22,7 @@ export const ProductCard = ({ product }) => {
   return (
     <Card maxW="xs">
       <CardBody>
-        <Image
-          src={image}
-          alt="Green double couch with wooden legs"
-          borderRadius="lg"
-        />
+        <Image src={image} alt={name} borderRadius="lg" />
         <Stack mt="6" spacing="3">
           <Heading size="md">{name} </Heading>
           <Text>{description}</Text>

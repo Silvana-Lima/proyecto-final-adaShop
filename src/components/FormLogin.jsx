@@ -44,7 +44,7 @@ export const FormLogin = ({
           <FormControl isInvalid={errors.email}>
             <FormLabel htmlFor="email">Email</FormLabel>
             <Input
-              type="text"
+              type="email"
               name="email"
               borderColor={'gray'}
               placeholder="Ingresar email"

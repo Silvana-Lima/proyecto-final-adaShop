@@ -1,9 +1,5 @@
-import { DeleteIcon } from '@chakra-ui/icons';
 import {
   Button,
-  Card,
-  CardBody,
-  CardFooter,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -12,24 +8,22 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Flex,
-  Heading,
   IconButton,
-  Image,
-  Stack,
   Text,
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 
 import { cartContext } from '../context/CartContext';
+import { CartCard } from './CartProductCard';
 
 export const DrawerCart = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
-  const { cart, deleteToCart, clearCart, priceTotalCart } =
-    useContext(cartContext);
+  const { cart, clearCart, priceTotalCart } = useContext(cartContext);
 
   return (
     <>
@@ -53,48 +47,10 @@ export const DrawerCart = () => {
           <DrawerHeader>Mi carrito</DrawerHeader>
 
           <DrawerBody>
+            {!cart.length && <Text>No hay productos en el carrito.</Text>}
             {cart &&
-              cart.map((p) => (
-                <Card
-                  direction={'row'}
-                  overflow="hidden"
-                  variant="outline"
-                  size={'sm'}
-                  p={1}
-                  justifyContent={'space-around'}
-                  key={p.id}
-                  mb={3}
-                >
-                  <Image
-                    objectFit="cover"
-                    maxW={'50%'}
-                    src={p.image}
-                    alt="Caffe Latte"
-                  />
-
-                  <Stack>
-                    <CardBody p={2}>
-                      <Heading size="sm">{p.name}</Heading>
-
-                      <Text>
-                        {`Precio x u.: $${p.price}`}
-                        <br /> {`Cantidad: ${p.quantity}`}{' '}
-                      </Text>
-                    </CardBody>
-
-                    <CardFooter justifyContent={'end'}>
-                      <IconButton
-                        aria-label="Cart"
-                        icon={<DeleteIcon />}
-                        variant="solid"
-                        colorScheme="orange"
-                        size={'xs'}
-                        id={p.id}
-                        onClick={() => deleteToCart(p.id)}
-                      ></IconButton>
-                    </CardFooter>
-                  </Stack>
-                </Card>
+              cart.map((product) => (
+                <CartCard size={'sm'} product={product} key={product.id} />
               ))}
           </DrawerBody>
 
@@ -110,7 +66,14 @@ export const DrawerCart = () => {
                 >
                   Vaciar Carrito
                 </Button>
-                <Button colorScheme="teal">Finalizar Compra</Button>
+                <Button
+                  colorScheme="teal"
+                  as={Link}
+                  to={'/checkout'}
+                  onClick={onClose}
+                >
+                  Finalizar Compra
+                </Button>
               </Flex>
             </VStack>
           </DrawerFooter>

@@ -81,7 +81,7 @@ export const ProductsPage = ({ allProducts, loading }) => {
             <Text fontWeight={'bold'}>Cargando productos</Text>
           </Flex>
         )}
-        <SimpleGrid columns={[1, 3, 3]} spacing={['20px', '10px', '40px']}>
+        <SimpleGrid minChildWidth="300px" spacing="20px">
           {!loading &&
             products &&
             products.map((product) => (
