@@ -18,12 +18,14 @@ import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
 import { cartContext } from '../context/CartContext';
+import { userContext } from '../context/UserContext';
 import { CartCard } from './CartProductCard';
 
 export const DrawerCart = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const { cart, clearCart, priceTotalCart } = useContext(cartContext);
+  const { user } = useContext(userContext);
 
   return (
     <>
@@ -69,7 +71,7 @@ export const DrawerCart = () => {
                 <Button
                   colorScheme="teal"
                   as={Link}
-                  to={'/checkout'}
+                  to={user ? '/checkout' : '/login'}
                   onClick={onClose}
                 >
                   Finalizar Compra

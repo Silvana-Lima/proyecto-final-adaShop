@@ -8,23 +8,35 @@ import {
   Heading,
   Input,
 } from '@chakra-ui/react';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-export const FormLogin = ({
-  title,
-  textButtonSubmit,
-  subtitle,
-  textButton,
-  toLink,
-  functionOnsubmit,
-}) => {
+import { userContext } from '../../context/UserContext';
+import { loginWithEmail, registerUser } from '../../services/auth';
+
+export const Login = () => {
+  const { handleUser } = useContext(userContext);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [existingUser, setExistingUser] = useState(true);
+
+  const loginUser = async (data) => {
+    const loginUser = await loginWithEmail(data);
+    handleUser(loginUser);
+    navigate('/products');
+  };
+
+  const createUser = async (data) => {
+    const newUser = await registerUser(data);
+    handleUser(newUser);
+    navigate('/products');
+  };
 
   return (
     <Flex direction={'column'} minH={'80vh'}>
@@ -35,11 +47,13 @@ export const FormLogin = ({
       </Flex>
       <Container>
         <Heading as={'h3'} fontSize={['xl', '3xl']} mb={6}>
-          {title}
+          {existingUser ? 'Iniciar Sesión' : 'Crear Usuario'}
         </Heading>
         <form
           style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
-          onSubmit={handleSubmit(functionOnsubmit)}
+          onSubmit={
+            existingUser ? handleSubmit(loginUser) : handleSubmit(createUser)
+          }
         >
           <FormControl isInvalid={errors.email}>
             <FormLabel htmlFor="email">Email</FormLabel>
@@ -78,17 +92,21 @@ export const FormLogin = ({
             <FormErrorMessage>{errors.password?.message} </FormErrorMessage>
           </FormControl>
           <Button type="submit" colorScheme="teal">
-            {textButtonSubmit}
+            {existingUser ? 'Ingresar' : 'Crear'}
           </Button>
 
           <Button leftIcon={<FcGoogle />} bg={'gray.400'}>
             Continuar con Google
           </Button>
           <Heading as={'h4'} fontSize={'sm'}>
-            {subtitle}
+            {existingUser ? '¿No tienes usuario?' : '¿Ya tienes usuario?'}
           </Heading>
-          <Button as={Link} to={toLink} variant={'outline'} colorScheme="teal">
-            {textButton}
+          <Button
+            variant={'outline'}
+            colorScheme="teal"
+            onClick={() => setExistingUser(!existingUser)}
+          >
+            {existingUser ? 'Regístrate' : 'Iniciar sesión'}
           </Button>
         </form>
       </Container>

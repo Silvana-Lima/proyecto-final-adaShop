@@ -29,7 +29,7 @@ export const Home = ({ allProducts, loading }) => {
       </Container>
       <Container maxW={'100%'}>
         <Heading as="h2" fontSize={['xl', '3xl']} mb={5} fontStyle={'italic'}>
-          Productos destacados
+          Productos recientes
         </Heading>
         {loading && (
           <Flex justify={'center'} align={'center'} direction={'column'}>
