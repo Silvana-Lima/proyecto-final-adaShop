@@ -8,6 +8,7 @@ import {
   Input,
   SimpleGrid,
   Text,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
 import { useContext } from 'react';
@@ -28,13 +29,14 @@ export const Checkout = () => {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
+  const toast = useToast();
 
   const createRandomBoolean = () => {
     return Math.random() < 0.5;
   };
   const randomBoolean = createRandomBoolean();
 
-  const addOrder = (data) => {
+  const addOrder = async (data) => {
     createOrder({
       customer: {
         ...data,
@@ -43,6 +45,17 @@ export const Checkout = () => {
       total: priceTotalCart,
       payed: randomBoolean,
       products: cart,
+    });
+    toast({
+      title: 'Orden creada con éxito',
+      colorScheme: 'teal',
+      duration: 2000,
+      isClosable: true,
+    });
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(true);
+      }, 1500);
     });
 
     navigate('/my-account/orders');

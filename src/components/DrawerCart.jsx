@@ -59,7 +59,7 @@ export const DrawerCart = ({ handleIsCheckingOut }) => {
               ))}
           </DrawerBody>
 
-          <DrawerFooter pr={3}>
+          <DrawerFooter pr={3} display={cart.length ? 'block' : 'none'}>
             <VStack>
               <Text>{`Total $${priceTotalCart}`}</Text>
               <Flex>
