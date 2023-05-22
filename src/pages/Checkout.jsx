@@ -12,22 +12,41 @@ import {
 } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import { CartProductCard } from '../components/CartProductCard';
 import { cartContext } from '../context/CartContext';
 import { userContext } from '../context/UserContext';
+import { createOrder } from '../services/orders';
 
 export const Checkout = () => {
-  const { cart, priceTotalCart } = useContext(cartContext);
+  const { cart, priceTotalCart, clearCart } = useContext(cartContext);
   const { user } = useContext(userContext);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
 
-  const sub = (data) => {
-    console.log(data);
+  const createRandomBoolean = () => {
+    return Math.random() < 0.5;
+  };
+  const randomBoolean = createRandomBoolean();
+
+  const addOrder = (data) => {
+    createOrder({
+      customer: {
+        ...data,
+        userId: user.uid,
+      },
+      total: priceTotalCart,
+      payed: randomBoolean,
+      products: cart,
+    });
+
+    navigate('/my-account/orders');
+    clearCart();
   };
 
   return (
@@ -50,7 +69,7 @@ export const Checkout = () => {
         <GridItem w={'100%'}>
           <form
             style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
-            onSubmit={handleSubmit(sub)}
+            onSubmit={handleSubmit(addOrder)}
           >
             <Heading as={'h3'} fontSize={'lg'}>
               Completa tus datos
@@ -75,19 +94,20 @@ export const Checkout = () => {
                 placeholder="Ingresar email"
                 id="email"
                 value={user && user.email}
+                {...register('email')}
                 readOnly
               />
             </FormControl>
-            <FormControl isInvalid={errors.direction} borderColor={'gray'}>
-              <FormLabel htmlFor="direction">Dirección</FormLabel>
+            <FormControl isInvalid={errors.addres} borderColor={'gray'}>
+              <FormLabel htmlFor="addres">Dirección</FormLabel>
               <Input
                 type="text"
-                name="direction"
-                {...register('direction', {
+                name="addres"
+                {...register('addres', {
                   required: 'Este campo es requerido',
                 })}
               />
-              <FormErrorMessage>{errors.direction?.message} </FormErrorMessage>
+              <FormErrorMessage>{errors.addres?.message} </FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={errors.tel} borderColor={'gray'}>
               <FormLabel htmlFor="tel">Teléfono</FormLabel>
