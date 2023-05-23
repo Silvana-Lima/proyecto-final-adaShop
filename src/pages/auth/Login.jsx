@@ -25,7 +25,6 @@ export const Login = ({ isCheckingOut }) => {
     formState: { errors },
   } = useForm();
   const [existingUser, setExistingUser] = useState(true);
-  console.log(isCheckingOut);
 
   const loginUser = async (data) => {
     const loginUser = await loginWithEmail(data);

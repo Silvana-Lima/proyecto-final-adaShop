@@ -12,7 +12,7 @@ export const registerUser = async (data) => {
       data.email,
       data.password
     );
-    const newUser = userCredential;
+    const newUser = userCredential.user;
     return newUser;
   } catch {
     (error) => {
@@ -31,8 +31,8 @@ export const loginWithEmail = async (data) => {
       data.email,
       data.password
     );
-    const newUser = userCredential;
-    return newUser;
+    const user = userCredential.user;
+    return user;
   } catch {
     (error) => {
       const errorCode = error.code;
