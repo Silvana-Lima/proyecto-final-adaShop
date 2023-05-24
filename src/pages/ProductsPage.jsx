@@ -10,24 +10,32 @@ import {
   Spinner,
   Text,
 } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { ProductCard } from '../components/ProductCard';
-import { filterProducts } from '../utils/filterProducts';
+import { getFilteredProducts } from '../services/products';
 
-export const ProductsPage = ({ allProducts, loading }) => {
+export const ProductsPage = ({ loading }) => {
   const { register, watch } = useForm();
+  const [products, setProducts] = useState([]);
 
   const nameWatch = watch('name');
   const categoryWatch = watch('category');
   const priceWatch = watch('price');
 
-  const products = filterProducts(
-    allProducts,
-    nameWatch,
-    categoryWatch,
-    priceWatch
-  );
+  useEffect(() => {
+    const getData = async () => {
+      const leakedProducts = await getFilteredProducts(
+        nameWatch,
+        categoryWatch,
+        priceWatch
+      );
+      setProducts(leakedProducts);
+    };
+
+    getData();
+  }, [nameWatch, categoryWatch, priceWatch]);
 
   return (
     <>
@@ -40,6 +48,9 @@ export const ProductsPage = ({ allProducts, loading }) => {
         spacing={['10px', '10px', '30px', '50px']}
       >
         <FormControl pb={10} pt={5}>
+          <Heading as={'h3'} fontSize={['md', 'md']} mb={5}>
+            Buscar por:
+          </Heading>
           <Box mb={5}>
             <FormLabel htmlFor="name">Nombre</FormLabel>
             <Input
@@ -57,11 +68,11 @@ export const ProductsPage = ({ allProducts, loading }) => {
               borderColor={'gray'}
               {...register('category')}
             >
-              <option value="todas">Todas</option>
-              <option value="smarthphones">Smarthphones</option>
-              <option value="televisores">Televisores</option>
-              <option value="electrodomésticos">Electrodomésticos</option>
-              <option value="portátiles">Portátiles</option>
+              <option value="Todas">Todas</option>
+              <option value="Smarthphones">Smarthphones</option>
+              <option value="Televisores">Televisores</option>
+              <option value="Electrodomésticos">Electrodomésticos</option>
+              <option value="Portátiles">Portátiles</option>
             </Select>
           </Box>
           <Box>
