@@ -14,28 +14,27 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { ProductCard } from '../components/ProductCard';
+import { useDebounce } from '../hooks/useDebounce';
 import { getFilteredProducts } from '../services/products';
 
 export const ProductsPage = ({ loading }) => {
   const { register, watch } = useForm();
   const [products, setProducts] = useState([]);
 
-  const nameWatch = watch('name');
-  const categoryWatch = watch('category');
-  const priceWatch = watch('price');
+  const debounceValue = useDebounce({
+    name: watch('name'),
+    category: watch('category'),
+    price: watch('price'),
+  });
 
   useEffect(() => {
     const getData = async () => {
-      const leakedProducts = await getFilteredProducts(
-        nameWatch,
-        categoryWatch,
-        priceWatch
-      );
+      const leakedProducts = await getFilteredProducts(debounceValue);
       setProducts(leakedProducts);
     };
 
     getData();
-  }, [nameWatch, categoryWatch, priceWatch]);
+  }, [debounceValue]);
 
   return (
     <>

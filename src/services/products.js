@@ -23,7 +23,7 @@ export const getproducts = async () => {
   return products;
 };
 
-export const getFilteredProducts = async (name, category, price) => {
+export const getFilteredProducts = async ({ name = '', category, price }) => {
   const q = query(
     collection(db, 'products'),
     orderBy('name'),
