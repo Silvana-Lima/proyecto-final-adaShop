@@ -20,7 +20,7 @@ export const UserProvider = ({ children }) => {
         await new Promise((resolve) => {
           setTimeout(() => {
             resolve(true);
-          }, 500);
+          }, 1000);
         });
         onAuthStateChanged(auth, (user) => {
           if (user) {

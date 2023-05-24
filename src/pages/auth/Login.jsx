@@ -7,6 +7,7 @@ import {
   FormLabel,
   Heading,
   Input,
+  useToast,
 } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -25,6 +26,7 @@ export const Login = ({ isCheckingOut }) => {
     formState: { errors },
   } = useForm();
   const [existingUser, setExistingUser] = useState(true);
+  const toast = useToast();
 
   const loginUser = async (data) => {
     const loginUser = await loginWithEmail(data);
@@ -39,6 +41,12 @@ export const Login = ({ isCheckingOut }) => {
   const createUser = async (data) => {
     const newUser = await registerUser(data);
     handleUser(newUser);
+    toast({
+      title: 'Cuenta creada con éxito',
+      colorScheme: 'teal',
+      duration: 2000,
+      isClosable: true,
+    });
     if (isCheckingOut) {
       navigate('/checkout');
     } else {

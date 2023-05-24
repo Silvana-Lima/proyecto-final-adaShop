@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 import { cartContext } from '../context/CartContext';
 
 export const ProductCard = ({ product }) => {
-  const { name, description, price, id, image } = product;
+  const { name, price, id, image } = product;
   const { addToCart } = useContext(cartContext);
 
   return (
@@ -24,8 +24,7 @@ export const ProductCard = ({ product }) => {
       <CardBody>
         <Image src={image} alt={name} borderRadius="lg" />
         <Stack mt="6" spacing="3">
-          <Heading size="md">{name} </Heading>
-          <Text>{description}</Text>
+          <Heading size="sm">{name} </Heading>
           <Text color="teal" fontSize="2xl">
             {`$${price}`}
           </Text>
@@ -35,8 +34,8 @@ export const ProductCard = ({ product }) => {
       <CardFooter>
         <ButtonGroup spacing="2">
           <Button
-            variant="solid"
-            colorScheme="orange"
+            variant="ghost"
+            colorScheme="teal"
             id={id}
             as={Link}
             to={`/products/${id}`}
@@ -44,8 +43,8 @@ export const ProductCard = ({ product }) => {
             Ver Detalles
           </Button>
           <Button
-            variant="ghost"
-            colorScheme="teal"
+            variant="solid"
+            colorScheme="orange"
             id={id}
             value={1}
             onClick={() => addToCart(product)}
