@@ -56,12 +56,7 @@ function App() {
             path="/"
             element={<Home allProducts={allProducts} loading={loading} />}
           />
-          <Route
-            path="/products"
-            element={
-              <ProductsPage allProducts={allProducts} loading={loading} />
-            }
-          />
+          <Route path="/products" element={<ProductsPage />} />
           <Route
             path="/products/:id"
             element={<ProductDetails allProducts={allProducts} />}

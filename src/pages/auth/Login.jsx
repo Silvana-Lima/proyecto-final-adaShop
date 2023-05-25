@@ -1,4 +1,8 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
   Button,
   Container,
   Flex,
@@ -19,6 +23,7 @@ import { loginWithEmail, registerUser } from '../../services/auth';
 
 export const Login = ({ isCheckingOut }) => {
   const { handleUser } = useContext(userContext);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -29,28 +34,41 @@ export const Login = ({ isCheckingOut }) => {
   const toast = useToast();
 
   const loginUser = async (data) => {
-    const loginUser = await loginWithEmail(data);
-    handleUser(loginUser);
-    if (isCheckingOut) {
-      navigate('/checkout');
-    } else {
-      navigate('/products');
+    setError(false);
+    try {
+      const user = await loginWithEmail(data);
+      handleUser(user);
+
+      if (isCheckingOut) {
+        navigate('/checkout');
+      } else {
+        navigate('/products');
+      }
+    } catch (error) {
+      const errorMessage = error.message;
+      setError(errorMessage);
     }
   };
 
   const createUser = async (data) => {
-    const newUser = await registerUser(data);
-    handleUser(newUser);
-    toast({
-      title: 'Cuenta creada con éxito',
-      colorScheme: 'teal',
-      duration: 2000,
-      isClosable: true,
-    });
-    if (isCheckingOut) {
-      navigate('/checkout');
-    } else {
-      navigate('/products');
+    try {
+      setError(false);
+      const newUser = await registerUser(data);
+      handleUser(newUser);
+      toast({
+        title: 'Cuenta creada con éxito',
+        colorScheme: 'teal',
+        duration: 2000,
+        isClosable: true,
+      });
+      if (isCheckingOut) {
+        navigate('/checkout');
+      } else {
+        navigate('/products');
+      }
+    } catch (error) {
+      const errorMessage = error.message;
+      setError(errorMessage);
     }
   };
 
@@ -107,6 +125,13 @@ export const Login = ({ isCheckingOut }) => {
             />
             <FormErrorMessage>{errors.password?.message} </FormErrorMessage>
           </FormControl>
+          {error && (
+            <Alert status="error">
+              <AlertIcon />
+              <AlertTitle>Error!</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
           <Button type="submit" colorScheme="teal">
             {existingUser ? 'Ingresar' : 'Crear'}
           </Button>

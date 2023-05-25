@@ -4,6 +4,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Portal,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
@@ -26,14 +27,16 @@ export const ButtonMenu = ({
         colorScheme={scheme}
         variant={variant}
       />
-      <MenuList>
-        <MenuItem as={Link} to={firstTo}>
-          {firstItem}
-        </MenuItem>
-        <MenuItem as={Link} to={secondTo} onClick={onClick}>
-          {secondItem}
-        </MenuItem>
-      </MenuList>
+      <Portal>
+        <MenuList>
+          <MenuItem as={Link} to={firstTo}>
+            {firstItem}
+          </MenuItem>
+          <MenuItem as={Link} to={secondTo} onClick={onClick}>
+            {secondItem}
+          </MenuItem>
+        </MenuList>
+      </Portal>
     </Menu>
   );
 };

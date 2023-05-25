@@ -17,8 +17,9 @@ import { ProductCard } from '../components/ProductCard';
 import { useDebounce } from '../hooks/useDebounce';
 import { getFilteredProducts } from '../services/products';
 
-export const ProductsPage = ({ loading }) => {
+export const ProductsPage = () => {
   const { register, watch } = useForm();
+  const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
 
   const debounceValue = useDebounce({
@@ -29,8 +30,14 @@ export const ProductsPage = ({ loading }) => {
 
   useEffect(() => {
     const getData = async () => {
-      const leakedProducts = await getFilteredProducts(debounceValue);
-      setProducts(leakedProducts);
+      try {
+        const leakedProducts = await getFilteredProducts(debounceValue);
+        setProducts(leakedProducts);
+      } catch {
+        console.log('error');
+      } finally {
+        setLoading(false);
+      }
     };
 
     getData();
