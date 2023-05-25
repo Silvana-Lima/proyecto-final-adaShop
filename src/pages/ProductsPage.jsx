@@ -21,6 +21,7 @@ export const ProductsPage = () => {
   const { register, watch } = useForm();
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
+  const [error, setError] = useState(false);
 
   const debounceValue = useDebounce({
     name: watch('name'),
@@ -34,7 +35,7 @@ export const ProductsPage = () => {
         const leakedProducts = await getFilteredProducts(debounceValue);
         setProducts(leakedProducts);
       } catch {
-        console.log('error');
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -107,6 +108,7 @@ export const ProductsPage = () => {
           {!loading && !products.length && (
             <Text>No se encontraron productos</Text>
           )}
+          {error && <Text>Error al obtener los productos.</Text>}
         </SimpleGrid>
       </SimpleGrid>
     </>
