@@ -10,11 +10,15 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
+  IconButton,
   Input,
+  InputGroup,
+  InputRightElement,
   useToast,
 } from '@chakra-ui/react';
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -22,17 +26,18 @@ import { userContext } from '../../context/UserContext';
 import { loginWithEmail, registerUser } from '../../services/auth';
 
 export const Login = ({ isCheckingOut }) => {
+  // Context and navigation
   const { handleUser } = useContext(userContext);
-  const [error, setError] = useState(false);
   const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+
+  // States and functions
+  const [error, setError] = useState(false);
   const [existingUser, setExistingUser] = useState(true);
+  const [showPassword, setShowPassword] = React.useState(false);
+
   const toast = useToast();
 
+  // Function to login
   const loginUser = async (data) => {
     setError(false);
     try {
@@ -50,6 +55,7 @@ export const Login = ({ isCheckingOut }) => {
     }
   };
 
+  //function to create user
   const createUser = async (data) => {
     try {
       setError(false);
@@ -71,6 +77,13 @@ export const Login = ({ isCheckingOut }) => {
       setError(errorMessage);
     }
   };
+
+  //registration and validation of forms
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   return (
     <Flex direction={'column'} minH={'80vh'}>
@@ -94,7 +107,7 @@ export const Login = ({ isCheckingOut }) => {
             <Input
               type="email"
               name="email"
-              borderColor={'gray'}
+              borderColor={'teal'}
               placeholder="Ingresar email"
               id="email"
               {...register('email', {
@@ -109,20 +122,34 @@ export const Login = ({ isCheckingOut }) => {
           </FormControl>
           <FormControl isInvalid={errors.password}>
             <FormLabel htmlFor="password">Contraseña</FormLabel>
-            <Input
-              type="password"
-              name="password"
-              borderColor={'gray'}
-              placeholder="Ingresar contraseña"
-              id="password"
-              {...register('password', {
-                required: 'Este campo es requerido',
-                minLength: {
-                  value: 6,
-                  message: 'La cantidad mínima de carácteres es 6',
-                },
-              })}
-            />
+            <InputGroup size="md">
+              <Input
+                pr="4.5rem"
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                borderColor={'teal'}
+                placeholder="Ingresar contraseña"
+                id="password"
+                {...register('password', {
+                  required: 'Este campo es requerido',
+                  minLength: {
+                    value: 6,
+                    message: 'La cantidad mínima de carácteres es 6',
+                  },
+                })}
+              />
+              <InputRightElement width="4.5rem">
+                <IconButton
+                  icon={showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+                  size="sm"
+                  fontSize={'20px'}
+                  variant="outline"
+                  colorScheme="teal"
+                  border={'none'}
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+              </InputRightElement>
+            </InputGroup>
             <FormErrorMessage>{errors.password?.message} </FormErrorMessage>
           </FormControl>
           {error && (
