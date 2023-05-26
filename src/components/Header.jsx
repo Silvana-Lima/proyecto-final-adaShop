@@ -27,7 +27,8 @@ export const Header = ({ handleIsCheckingOut }) => {
         <Stack as={Link} to={'/'}>
           <Image src="/AdaShopLogo.png" h={['60px', '100px']} />
         </Stack>
-        <Show below="sm">
+
+        <Show below="md">
           <ButtonMenu
             icon={<HamburgerIcon />}
             firstItem={'Inicio'}
@@ -39,8 +40,8 @@ export const Header = ({ handleIsCheckingOut }) => {
           />
         </Show>
 
-        <Show above="sm">
-          <Breadcrumb pt={5}>
+        <Show above="md">
+          <Breadcrumb pt={5} pl={15} separator="">
             <BreadcrumbItem>
               <BreadcrumbLink as={Link} to={'/'}>
                 Inicio

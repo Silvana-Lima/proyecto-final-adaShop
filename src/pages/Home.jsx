@@ -1,7 +1,9 @@
 import {
+  Button,
   Container,
   Flex,
   Heading,
+  Link,
   SimpleGrid,
   Spinner,
   Text,
@@ -15,17 +17,24 @@ export const Home = ({ allProducts, loading }) => {
       <Container
         bg={'#05595B'}
         maxW={['sm', '6xl']}
-        h="2xs"
         p={8}
         mb={5}
         textAlign={'left'}
-        display={'flex'}
         alignItems={'center'}
       >
-        <Heading as={'h1'} color={'white'}>
-          Proyecto final ADAITW, <br /> un ecommerce para aprender <br /> y
-          aplicar tecnologías web.
+        <Heading as={'h1'} color={'white'} mb={5}>
+          Proyecto final ADAITW, un ecommerce para aprender y aplicar
+          tecnologías web.
         </Heading>
+        <Button
+          fontSize={['sm', 'md']}
+          colorScheme="orange"
+          as={Link}
+          href="https://adaitw.org/"
+          isExternal
+        >
+          Ver más
+        </Button>
       </Container>
       <Container maxW={'100%'}>
         <Heading as="h2" fontSize={['xl', '3xl']} mb={5} fontStyle={'italic'}>
@@ -37,7 +46,11 @@ export const Home = ({ allProducts, loading }) => {
             <Text fontWeight={'bold'}>Cargando productos</Text>
           </Flex>
         )}
-        <SimpleGrid minChildWidth="300px" spacing="20px">
+        <SimpleGrid
+          minChildWidth="270px"
+          spacing="20px"
+          justifyItems={'center'}
+        >
           {!loading &&
             allProducts.map((product) => (
               <ProductCard key={product.id} product={product} />

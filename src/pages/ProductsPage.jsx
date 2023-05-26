@@ -60,16 +60,22 @@ export const ProductsPage = () => {
 
   return (
     <>
-      <Heading as={'h2'} fontSize={['2xl', '3xl']}>
-        Productos
-      </Heading>
       <SimpleGrid
         columns={[1, 1, 1, 2]}
-        templateColumns={['1fr', '1fr', '1fr 4fr']}
-        spacing={['10px', '10px', '30px', '50px']}
+        templateColumns={['1fr', '2fr', '1fr 2fr', '1fr 4fr']}
+        spacing={['10px', '10px', '30px']}
+        m={3}
       >
-        <FormControl pb={10} pt={5}>
-          <Box mb={5}>
+        <Box>
+          <Heading
+            as={'h2'}
+            fontSize={['2xl', '3xl']}
+            textAlign={'left'}
+            mb={[3, 5]}
+          >
+            Productos
+          </Heading>
+          <FormControl mb={[3, 5]}>
             <FormLabel htmlFor="name">Nombre</FormLabel>
             <Input
               type="text"
@@ -79,8 +85,8 @@ export const ProductsPage = () => {
               placeholder="Ingresar nombre"
               onChange={(e) => handleFilters(e)}
             />
-          </Box>
-          <Box mb={5}>
+          </FormControl>
+          <FormControl mb={[3, 5]}>
             <FormLabel htmlFor="category">Categoria</FormLabel>
             <Select
               name="category"
@@ -94,8 +100,8 @@ export const ProductsPage = () => {
               <option value="electrodomésticos">Electrodomésticos</option>
               <option value="portátiles">Portátiles</option>
             </Select>
-          </Box>
-          <Box>
+          </FormControl>
+          <FormControl mb={5}>
             <FormLabel htmlFor="price">Precio Máximo</FormLabel>
             <Input
               type="number"
@@ -105,25 +111,31 @@ export const ProductsPage = () => {
               placeholder="Hasta"
               onChange={(e) => handleFilters(e)}
             />
-          </Box>
-        </FormControl>
+          </FormControl>
+        </Box>
 
-        {loading && (
-          <Flex justify={'center'} align={'center'} direction={'column'}>
-            <Spinner size="lg" mb={5} />
-            <Text fontWeight={'bold'}>Cargando productos</Text>
-          </Flex>
-        )}
+        <SimpleGrid
+          minChildWidth="270px"
+          justifyItems={'center'}
+          spacing="20px"
+        >
+          {loading && (
+            <Flex justify={'center'} align={'center'} direction={'column'}>
+              <Spinner size="lg" mb={5} />
+              <Text fontWeight={'bold'}>Cargando productos</Text>
+            </Flex>
+          )}
 
-        <SimpleGrid minChildWidth="270px" spacing="20px">
           {!loading &&
             leakedProducts &&
             leakedProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
+
           {!loading && !leakedProducts.length && (
             <Text>No se encontraron productos</Text>
           )}
+
           {error && <Text>Error al obtener los productos.</Text>}
         </SimpleGrid>
       </SimpleGrid>
