@@ -1,4 +1,4 @@
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { createContext, useEffect, useState } from 'react';
 
 import { auth } from '../firebase/config';
@@ -41,7 +41,7 @@ export const UserProvider = ({ children }) => {
 
   const handleLogout = () => {
     setUser(null);
-    auth.signOut();
+    signOut(auth);
   };
 
   return (

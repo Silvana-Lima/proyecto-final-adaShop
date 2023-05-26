@@ -23,7 +23,11 @@ import { FcGoogle } from 'react-icons/fc';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { userContext } from '../../context/UserContext';
-import { loginWithEmail, registerUser } from '../../services/auth';
+import {
+  loginWithEmail,
+  loginWithGoogle,
+  registerUser,
+} from '../../services/auth';
 
 export const Login = ({ isCheckingOut }) => {
   // Context and navigation
@@ -55,7 +59,25 @@ export const Login = ({ isCheckingOut }) => {
     }
   };
 
-  //function to create user
+  //Function to login with Google
+
+  const loginUserWithGoogle = async () => {
+    try {
+      const userGoogle = await loginWithGoogle();
+      handleUser({ email: userGoogle.email, uid: userGoogle.uid });
+
+      if (isCheckingOut) {
+        navigate('/checkout');
+      } else {
+        navigate('/products');
+      }
+    } catch (error) {
+      const errorMessage = error.message;
+      setError(errorMessage);
+    }
+  };
+
+  // Function to create user
   const createUser = async (data) => {
     try {
       setError(false);
@@ -78,7 +100,7 @@ export const Login = ({ isCheckingOut }) => {
     }
   };
 
-  //registration and validation of forms
+  // Registration and validation of forms
   const {
     register,
     handleSubmit,
@@ -163,7 +185,11 @@ export const Login = ({ isCheckingOut }) => {
             {existingUser ? 'Ingresar' : 'Crear'}
           </Button>
 
-          <Button leftIcon={<FcGoogle />} bg={'gray.400'}>
+          <Button
+            leftIcon={<FcGoogle />}
+            bg={'gray.400'}
+            onClick={loginUserWithGoogle}
+          >
             Continuar con Google
           </Button>
           <Heading as={'h4'} fontSize={'sm'}>
