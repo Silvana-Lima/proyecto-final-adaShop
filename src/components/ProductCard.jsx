@@ -11,6 +11,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useContext } from 'react';
+import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
 import { cartContext } from '../context/CartContext';
@@ -45,11 +46,12 @@ export const ProductCard = ({ product }) => {
           <Button
             variant="solid"
             colorScheme="orange"
+            rightIcon={<AiOutlineShoppingCart />}
             id={id}
             value={1}
             onClick={() => addToCart(product)}
           >
-            Añadir al carrito
+            Añadir
           </Button>
         </ButtonGroup>
       </CardFooter>

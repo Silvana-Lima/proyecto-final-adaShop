@@ -11,23 +11,28 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 
 import { ProductCard } from '../components/ProductCard';
 import { useDebounce } from '../hooks/useDebounce';
 import { getFilteredProducts } from '../services/products';
 
 export const ProductsPage = () => {
-  const { register, watch } = useForm();
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(false);
-
-  const debounceValue = useDebounce({
-    name: watch('name'),
-    category: watch('category'),
-    price: watch('price'),
+  const [filters, setFilters] = useState({
+    name: '',
+    category: 'Todas',
+    price: 0,
   });
+
+  const handleFilters = (e) => {
+    setFilters({
+      ...filters,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const debounceValue = useDebounce(filters);
 
   useEffect(() => {
     const getData = async () => {
@@ -55,25 +60,24 @@ export const ProductsPage = () => {
         spacing={['10px', '10px', '30px', '50px']}
       >
         <FormControl pb={10} pt={5}>
-          <Heading as={'h3'} fontSize={['md', 'md']} mb={5}>
-            Buscar por:
-          </Heading>
           <Box mb={5}>
             <FormLabel htmlFor="name">Nombre</FormLabel>
             <Input
               type="text"
               name="name"
-              borderColor={'gray'}
+              borderColor={'gray.300'}
+              bg={'white'}
               placeholder="Ingresar nombre"
-              {...register('name')}
+              onChange={(e) => handleFilters(e)}
             />
           </Box>
           <Box mb={5}>
             <FormLabel htmlFor="category">Categoria</FormLabel>
             <Select
               name="category"
-              borderColor={'gray'}
-              {...register('category')}
+              borderColor={'gray.300'}
+              bg={'white'}
+              onChange={(e) => handleFilters(e)}
             >
               <option value="Todas">Todas</option>
               <option value="Smarthphones">Smarthphones</option>
@@ -87,19 +91,22 @@ export const ProductsPage = () => {
             <Input
               type="number"
               name="price"
-              borderColor={'gray'}
+              borderColor={'gray.300'}
+              bg={'white'}
               placeholder="Hasta"
-              {...register('price')}
+              onChange={(e) => handleFilters(e)}
             />
           </Box>
         </FormControl>
+
         {loading && (
           <Flex justify={'center'} align={'center'} direction={'column'}>
             <Spinner size="lg" mb={5} />
             <Text fontWeight={'bold'}>Cargando productos</Text>
           </Flex>
         )}
-        <SimpleGrid minChildWidth="300px" spacing="20px">
+
+        <SimpleGrid minChildWidth="270px" spacing="20px">
           {!loading &&
             products &&
             products.map((product) => (
