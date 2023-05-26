@@ -14,31 +14,34 @@ import { useEffect, useState } from 'react';
 
 import { ProductCard } from '../components/ProductCard';
 import { useDebounce } from '../hooks/useDebounce';
-import { getFilteredProducts } from '../services/products';
+import { getproducts } from '../services/products';
+import { filterProducts } from '../utils/filterProducts';
 
 export const ProductsPage = () => {
+  // States and functions
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(false);
   const [filters, setFilters] = useState({
     name: '',
-    category: 'Todas',
+    category: 'todas',
     price: 0,
   });
 
+  // Function to handle changes in filters
   const handleFilters = (e) => {
     setFilters({
       ...filters,
       [e.target.name]: e.target.value,
     });
   };
-  const debounceValue = useDebounce(filters);
 
+  // Get Cloud Firestore Products
   useEffect(() => {
     const getData = async () => {
       try {
-        const leakedProducts = await getFilteredProducts(debounceValue);
-        setProducts(leakedProducts);
+        const data = await getproducts();
+        setProducts(data);
       } catch {
         setError(true);
       } finally {
@@ -47,7 +50,13 @@ export const ProductsPage = () => {
     };
 
     getData();
-  }, [debounceValue]);
+  }, []);
+
+  // Using useDebounce hook to get the filtered value with delay
+  const debounceValue = useDebounce(filters);
+
+  // Apply filters to products
+  const leakedProducts = filterProducts(products, debounceValue);
 
   return (
     <>
@@ -79,11 +88,11 @@ export const ProductsPage = () => {
               bg={'white'}
               onChange={(e) => handleFilters(e)}
             >
-              <option value="Todas">Todas</option>
-              <option value="Smarthphones">Smarthphones</option>
-              <option value="Televisores">Televisores</option>
-              <option value="Electrodomésticos">Electrodomésticos</option>
-              <option value="Portátiles">Portátiles</option>
+              <option value="todas">Todas</option>
+              <option value="smarthphones">Smarthphones</option>
+              <option value="televisores">Televisores</option>
+              <option value="electrodomésticos">Electrodomésticos</option>
+              <option value="portátiles">Portátiles</option>
             </Select>
           </Box>
           <Box>
@@ -108,11 +117,11 @@ export const ProductsPage = () => {
 
         <SimpleGrid minChildWidth="270px" spacing="20px">
           {!loading &&
-            products &&
-            products.map((product) => (
+            leakedProducts &&
+            leakedProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
-          {!loading && !products.length && (
+          {!loading && !leakedProducts.length && (
             <Text>No se encontraron productos</Text>
           )}
           {error && <Text>Error al obtener los productos.</Text>}
