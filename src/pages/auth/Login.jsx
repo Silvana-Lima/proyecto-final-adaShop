@@ -62,18 +62,13 @@ export const Login = ({ isCheckingOut }) => {
   //Function to login with Google
 
   const loginUserWithGoogle = async () => {
-    try {
-      const userGoogle = await loginWithGoogle();
-      handleUser({ email: userGoogle.email, uid: userGoogle.uid });
+    const userGoogle = await loginWithGoogle();
+    handleUser({ email: userGoogle.email, uid: userGoogle.uid });
 
-      if (isCheckingOut) {
-        navigate('/checkout');
-      } else {
-        navigate('/products');
-      }
-    } catch (error) {
-      const errorMessage = error.message;
-      setError(errorMessage);
+    if (isCheckingOut) {
+      navigate('/checkout');
+    } else {
+      navigate('/products');
     }
   };
 
