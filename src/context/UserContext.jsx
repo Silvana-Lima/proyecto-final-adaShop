@@ -15,26 +15,21 @@ export const UserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const getUser = async () => {
-      try {
-        await new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(true);
-          }, 1000);
-        });
-        onAuthStateChanged(auth, (user) => {
+    const getUser = () => {
+      onAuthStateChanged(auth, (user) => {
+        try {
           if (user) {
             const uid = user.uid;
             setUser({ email: user.email, uid: uid });
           } else {
             setUser(null);
           }
-        });
-      } catch (error) {
-        setErrorUser(true);
-      } finally {
-        setLoadingUser(false);
-      }
+          setLoadingUser(false);
+        } catch (error) {
+          setErrorUser(true);
+          setLoadingUser(false);
+        }
+      });
     };
     getUser();
   }, []);

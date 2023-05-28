@@ -60,7 +60,6 @@ export const Login = ({ isCheckingOut }) => {
   };
 
   //Function to login with Google
-
   const loginUserWithGoogle = async () => {
     const userGoogle = await loginWithGoogle();
     handleUser({ email: userGoogle.email, uid: userGoogle.uid });
