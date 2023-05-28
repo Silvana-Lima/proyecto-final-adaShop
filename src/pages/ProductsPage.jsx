@@ -1,18 +1,17 @@
 import {
   Box,
-  Flex,
   FormControl,
   FormLabel,
   Heading,
   Input,
   Select,
   SimpleGrid,
-  Spinner,
   Text,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 
 import { ProductCard } from '../components/ProductCard';
+import { SkeletonCard } from '../components/SkeletonCard';
 import { useDebounce } from '../hooks/useDebounce';
 import { getproducts } from '../services/products';
 import { filterProducts } from '../utils/filterProducts';
@@ -113,19 +112,27 @@ export const ProductsPage = () => {
             />
           </FormControl>
         </Box>
-
+        {loading && (
+          <SimpleGrid
+            minChildWidth="270px"
+            spacing="20px"
+            justifyItems={'center'}
+          >
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+          </SimpleGrid>
+        )}
         <SimpleGrid
           minChildWidth="270px"
           justifyItems={'center'}
           spacing="20px"
         >
-          {loading && (
-            <Flex justify={'center'} align={'center'} direction={'column'}>
-              <Spinner size="lg" mb={5} />
-              <Text fontWeight={'bold'}>Cargando productos</Text>
-            </Flex>
-          )}
-
           {!loading &&
             leakedProducts &&
             leakedProducts.map((product) => (

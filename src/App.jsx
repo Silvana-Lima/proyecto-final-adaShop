@@ -16,7 +16,7 @@ import { getproducts } from './services/products';
 
 function App() {
   const [allProducts, setAllProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loadingProducts, setLoadingProducts] = useState(true);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ function App() {
       } catch {
         console.log('error');
       } finally {
-        setLoading(false);
+        setLoadingProducts(false);
       }
     };
 
@@ -54,7 +54,12 @@ function App() {
         >
           <Route
             path="/"
-            element={<Home allProducts={allProducts} loading={loading} />}
+            element={
+              <Home
+                allProducts={allProducts}
+                loadingProducts={loadingProducts}
+              />
+            }
           />
           <Route path="/products" element={<ProductsPage />} />
           <Route

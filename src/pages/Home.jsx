@@ -1,17 +1,16 @@
 import {
   Button,
   Container,
-  Flex,
   Heading,
   Link,
   SimpleGrid,
-  Spinner,
   Text,
 } from '@chakra-ui/react';
 
 import { ProductCard } from '../components/ProductCard';
+import { SkeletonCard } from '../components/SkeletonCard';
 
-export const Home = ({ allProducts, loading }) => {
+export const Home = ({ allProducts, loadingProducts }) => {
   return (
     <>
       <Container
@@ -40,22 +39,32 @@ export const Home = ({ allProducts, loading }) => {
         <Heading as="h2" fontSize={['xl', '3xl']} mb={5} fontStyle={'italic'}>
           Productos recientes
         </Heading>
-        {loading && (
-          <Flex justify={'center'} align={'center'} direction={'column'}>
-            <Spinner size="lg" mb={5} />
-            <Text fontWeight={'bold'}>Cargando productos</Text>
-          </Flex>
+        {loadingProducts && (
+          <SimpleGrid
+            minChildWidth="270px"
+            spacing="20px"
+            justifyItems={'center'}
+          >
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+          </SimpleGrid>
         )}
         <SimpleGrid
           minChildWidth="270px"
           spacing="20px"
           justifyItems={'center'}
         >
-          {!loading &&
+          {!loadingProducts &&
             allProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
-          {!loading && !allProducts.length && (
+          {!loadingProducts && !allProducts.length && (
             <Text>No se encontraron productos</Text>
           )}
         </SimpleGrid>
