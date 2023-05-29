@@ -27,8 +27,14 @@ export const loginWithEmail = async (data) => {
   return user;
 };
 
+const provider = new GoogleAuthProvider();
+
+//Add a custom parameter to the Google authentication provider to force the selection of an account each time a login attempt is made.
+provider.setCustomParameters({
+  prompt: 'select_account',
+});
+
 export const loginWithGoogle = async () => {
-  const provider = new GoogleAuthProvider();
   const userGoogle = await signInWithPopup(auth, provider);
   const user = userGoogle.user;
   return user;
