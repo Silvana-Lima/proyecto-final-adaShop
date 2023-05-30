@@ -8,9 +8,8 @@ export const cartContext = createContext();
 export const CartProvider = ({ children }) => {
   const initialCart = getLocalStorage('cart') || [];
   const [cart, setCart] = useState(initialCart);
-
   const initialPriceToCart = cart.reduce((acc, product) => {
-    return acc + product.totalPrice;
+    return acc + product.price * product.quantity;
   }, 0);
   const [priceTotalCart, setPriceTotalCart] = useState(initialPriceToCart);
 
@@ -27,17 +26,12 @@ export const CartProvider = ({ children }) => {
     isClosable: true,
   });
 
-  const addToTotalPrice = (acc) => {
-    setPriceTotalCart(
-      cart.reduce((acc, product) => {
-        return acc + product.totalPrice;
-      }, acc)
-    );
+  const addToTotalPrice = (price) => {
+    setPriceTotalCart((prev) => prev + price);
   };
 
   const addToCart = (product) => {
     let quantity = 1;
-    let totalPrice = product.price;
 
     const productInTheCart = cart.find((p) => p.id === product.id);
 
@@ -46,11 +40,9 @@ export const CartProvider = ({ children }) => {
       productInTheCart.quantity < productInTheCart.stock
     ) {
       productInTheCart.quantity = productInTheCart.quantity + 1;
-      productInTheCart.totalPrice =
-        productInTheCart.price * productInTheCart.quantity;
 
-      addToTotalPrice(0);
       setLocalStorage('cart', cart);
+      addToTotalPrice(productInTheCart.price);
       toastAddProduct();
     } else if (!productInTheCart) {
       setCart([
@@ -58,7 +50,6 @@ export const CartProvider = ({ children }) => {
         {
           ...product,
           quantity,
-          totalPrice,
         },
       ]);
       setLocalStorage('cart', [
@@ -66,10 +57,9 @@ export const CartProvider = ({ children }) => {
         {
           ...product,
           quantity,
-          totalPrice,
         },
       ]);
-      addToTotalPrice(totalPrice);
+      addToTotalPrice(product.price);
       toastAddProduct();
     } else {
       toastOutOfStock();
@@ -77,13 +67,14 @@ export const CartProvider = ({ children }) => {
   };
 
   const deleteToCart = (id) => {
-    const productToDelete = cart.find((p) => p.id === id);
-    setPriceTotalCart(priceTotalCart - productToDelete.totalPrice);
-
     setCart(cart.filter((p) => p.id !== id));
     setLocalStorage(
       'cart',
       cart.filter((p) => p.id !== id)
+    );
+    const productToDelete = cart.find((p) => p.id === id);
+    setPriceTotalCart(
+      priceTotalCart - productToDelete.price * productToDelete.quantity
     );
   };
 
