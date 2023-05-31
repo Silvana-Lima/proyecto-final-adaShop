@@ -75,7 +75,6 @@ export const Checkout = () => {
                 width={{ base: '330px', md: '330px', lg: '500px' }}
                 product={product}
                 key={product.id}
-                deleteButton
               />
             ))}
         </GridItem>

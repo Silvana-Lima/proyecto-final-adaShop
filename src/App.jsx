@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import { Flex, Image, Spinner } from '@chakra-ui/react';
+import { useContext, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { ProtectedRoute } from './components/ProtectedRoute';
+import { userContext } from './context/UserContext';
 import { AppLayout } from './layout/AppLayout';
 import { LoginLayout } from './layout/LoginLayout';
 import { Login } from './pages/auth/Login';
@@ -18,6 +20,7 @@ function App() {
   const [allProducts, setAllProducts] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const { loadingUser } = useContext(userContext);
 
   useEffect(() => {
     const getData = async () => {
@@ -41,40 +44,53 @@ function App() {
 
   return (
     <>
-      <Routes>
-        <Route element={<LoginLayout />}>
-          <Route
-            path="/login"
-            element={<Login isCheckingOut={isCheckingOut} />}
-          />
-        </Route>
-
-        <Route
-          element={<AppLayout handleIsCheckingOut={handleIsCheckingOut} />}
+      {loadingUser && (
+        <Flex
+          justify={'center'}
+          align={'center'}
+          direction={'column'}
+          minH={'100vh'}
         >
+          <Spinner size="lg" mb={5} />
+          <Image src="/AdaShopLogo.png" h={['60px', '100px']} />
+        </Flex>
+      )}
+      {!loadingUser && (
+        <Routes>
+          <Route element={<LoginLayout />}>
+            <Route
+              path="/login"
+              element={<Login isCheckingOut={isCheckingOut} />}
+            />
+          </Route>
+
           <Route
-            path="/"
-            element={
-              <Home
-                allProducts={allProducts}
-                loadingProducts={loadingProducts}
-              />
-            }
-          />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route
-            path="/products/:id"
-            element={<ProductDetails allProducts={allProducts} />}
-          />
-          <Route path="*" element={<Error404 />} />
-          <Route element={<ProtectedRoute />}>
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/my-account" element={<MyAccount />}>
-              <Route path="orders" element={<Orders />} />
+            element={<AppLayout handleIsCheckingOut={handleIsCheckingOut} />}
+          >
+            <Route
+              path="/"
+              element={
+                <Home
+                  allProducts={allProducts}
+                  loadingProducts={loadingProducts}
+                />
+              }
+            />
+            <Route path="/products" element={<ProductsPage />} />
+            <Route
+              path="/products/:id"
+              element={<ProductDetails allProducts={allProducts} />}
+            />
+            <Route path="*" element={<Error404 />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/my-account" element={<MyAccount />}>
+                <Route path="orders" element={<Orders />} />
+              </Route>
             </Route>
           </Route>
-        </Route>
-      </Routes>
+        </Routes>
+      )}
     </>
   );
 }
