@@ -9,41 +9,28 @@ import {
   Spinner,
   Text,
 } from '@chakra-ui/react';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { cartContext } from '../context/CartContext';
+import { useDataCloud } from '../hooks/useDataCloud';
 import { getProductById } from '../services/products';
 
 export const ProductDetails = () => {
   const { id } = useParams();
   const { addToCart } = useContext(cartContext);
-  const [product, setProduct] = useState({});
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const data = await getProductById(id);
-        setProduct(data);
-      } catch (error) {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getData();
-  }, []);
-
+  const {
+    products: product,
+    error,
+    loading,
+  } = useDataCloud(getProductById(id));
   const { name, description, price, image } = product;
 
   return (
     <Container maxW={'1200px'}>
       {!error && !loading && (
         <Container maxW={'1200px'}>
-          <Heading as={'h3'} fontSize={['xl', '3xl']} mb={5}>
+          <Heading as={'h3'} fontSize={['xl', '3xl']} mb={8}>
             {name}
           </Heading>
           <SimpleGrid columns={[1, 2]} spacing={'40px'}>

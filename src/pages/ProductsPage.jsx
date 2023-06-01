@@ -8,19 +8,18 @@ import {
   SimpleGrid,
   Text,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { ProductCard } from '../components/ProductCard';
 import { SkeletonCard } from '../components/SkeletonCard';
+import { useDataCloud } from '../hooks/useDataCloud';
 import { useDebounce } from '../hooks/useDebounce';
 import { getAllProducts } from '../services/products';
 import { filterProducts } from '../utils/filterProducts';
 
 export const ProductsPage = () => {
-  // States and functions
-  const [loading, setLoading] = useState(true);
-  const [products, setProducts] = useState([]);
-  const [error, setError] = useState(false);
+  // States, custom hooks and functions
+  const { products, error, loading } = useDataCloud(getAllProducts());
   const [filters, setFilters] = useState({
     name: '',
     category: 'todas',
@@ -34,22 +33,6 @@ export const ProductsPage = () => {
       [e.target.name]: e.target.value,
     });
   };
-
-  // Get Cloud Firestore Products
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const data = await getAllProducts();
-        setProducts(data);
-      } catch {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getData();
-  }, []);
 
   // Using useDebounce hook to get the filtered value with delay
   const debounceValue = useDebounce(filters);
@@ -139,7 +122,7 @@ export const ProductsPage = () => {
               <ProductCard key={product.id} product={product} />
             ))}
 
-          {!loading && !leakedProducts.length && (
+          {!loading && !leakedProducts.length && !error && (
             <Text>No se encontraron productos</Text>
           )}
 
