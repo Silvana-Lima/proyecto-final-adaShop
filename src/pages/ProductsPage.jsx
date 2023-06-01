@@ -124,7 +124,7 @@ export const ProductsPage = () => {
               <ProductCard key={product.id} product={product} />
             ))}
 
-          {!loading && !leakedProducts.length && (
+          {!loading && !leakedProducts.length && !error && (
             <Text>No se encontraron productos</Text>
           )}
 
