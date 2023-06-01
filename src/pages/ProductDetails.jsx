@@ -12,6 +12,7 @@ import {
 import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { ErrorAlert } from '../components/ErrorAlert';
 import { cartContext } from '../context/CartContext';
 import { useDataCloud } from '../hooks/useDataCloud';
 import { getProductById } from '../services/products';
@@ -75,7 +76,7 @@ export const ProductDetails = () => {
           direction={'column'}
           minH={'300px'}
         >
-          <Text>Hubo un error al obtener el producto</Text>
+          <ErrorAlert message={'Se produjo un error al obtener el producto'} />
         </Flex>
       )}
     </Container>

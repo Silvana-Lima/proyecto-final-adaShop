@@ -18,7 +18,7 @@ export const useDataCloud = (servicesProducts) => {
     };
 
     getData();
-  }, [servicesProducts]);
+  }, []);
 
   return { products, error, loading };
 };

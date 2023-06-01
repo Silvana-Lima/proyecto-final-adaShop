@@ -1,8 +1,4 @@
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
   Button,
   Container,
   Flex,
@@ -22,6 +18,7 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import { Link, useNavigate } from 'react-router-dom';
 
+import { ErrorAlert } from '../../components/ErrorAlert';
 import { userContext } from '../../context/UserContext';
 import {
   loginWithEmail,
@@ -168,13 +165,7 @@ export const Login = ({ isCheckingOut }) => {
             </InputGroup>
             <FormErrorMessage>{errors.password?.message} </FormErrorMessage>
           </FormControl>
-          {error && (
-            <Alert status="error">
-              <AlertIcon />
-              <AlertTitle>Error!</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
+          {error && <ErrorAlert message={error} />}
           <Button type="submit" colorScheme="teal">
             {existingUser ? 'Ingresar' : 'Crear'}
           </Button>

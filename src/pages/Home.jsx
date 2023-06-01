@@ -7,6 +7,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 
+import { ErrorAlert } from '../components/ErrorAlert';
 import { ProductCard } from '../components/ProductCard';
 import { SkeletonCard } from '../components/SkeletonCard';
 import { useDataCloud } from '../hooks/useDataCloud';
@@ -73,7 +74,11 @@ export const Home = () => {
           {!loading && !products.length && !error && (
             <Text>No se encontraron productos</Text>
           )}
-          {error && <Text>Hubo un error al obtener los productos</Text>}
+          {error && (
+            <ErrorAlert
+              message={'Se produjo un error al obtener los productos'}
+            />
+          )}
         </SimpleGrid>
       </Container>
     </>

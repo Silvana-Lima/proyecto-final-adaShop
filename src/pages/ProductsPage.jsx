@@ -1,5 +1,6 @@
 import {
   Box,
+  Flex,
   FormControl,
   FormLabel,
   Heading,
@@ -10,6 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
+import { ErrorAlert } from '../components/ErrorAlert';
 import { ProductCard } from '../components/ProductCard';
 import { SkeletonCard } from '../components/SkeletonCard';
 import { useDataCloud } from '../hooks/useDataCloud';
@@ -122,11 +124,17 @@ export const ProductsPage = () => {
               <ProductCard key={product.id} product={product} />
             ))}
 
-          {!loading && !leakedProducts.length && !error && (
+          {!loading && !leakedProducts.length && (
             <Text>No se encontraron productos</Text>
           )}
 
-          {error && <Text>Error al obtener los productos.</Text>}
+          {error && (
+            <Flex h={20} w={'100%'}>
+              <ErrorAlert
+                message={'Se produjo un error al obtener los productos'}
+              />
+            </Flex>
+          )}
         </SimpleGrid>
       </SimpleGrid>
     </>
