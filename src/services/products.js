@@ -1,15 +1,15 @@
 import {
   collection,
-  endAt,
+  doc,
+  getDoc,
   getDocs,
-  orderBy,
   query,
-  startAt,
+  where,
 } from 'firebase/firestore';
 
 import { db } from '../firebase/config';
 
-export const getproducts = async () => {
+export const getAllProducts = async () => {
   const querySnapshot = await getDocs(collection(db, 'products'));
 
   let products = [];
@@ -23,30 +23,28 @@ export const getproducts = async () => {
   return products;
 };
 
-export const getFilteredProducts = async ({ name = '', category, price }) => {
-  const q = query(
-    collection(db, 'products'),
-    orderBy('name'),
-    startAt(name),
-    endAt(name + '\uf8ff')
-  );
+export const getMultipleProducts = async (field, value) => {
+  const q = query(collection(db, 'products'), where(field, '==', value));
 
   const querySnapshot = await getDocs(q);
 
-  const products = querySnapshot.docs
-    .map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }))
-    .filter((p) => {
-      if (category !== 'Todas' && p.category !== category) {
-        return false;
-      }
-      if (price && p.price > price) {
-        return false;
-      }
-      return true;
-    });
+  const products = querySnapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
 
   return products;
+};
+
+export const getProductById = async (id) => {
+  const docRef = doc(collection(db, 'products'), id);
+
+  const querySnapshot = await getDoc(docRef);
+
+  const product = {
+    id: querySnapshot.id,
+    ...querySnapshot.data(),
+  };
+
+  return product;
 };

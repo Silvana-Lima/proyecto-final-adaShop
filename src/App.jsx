@@ -1,5 +1,5 @@
 import { Flex, Image, Spinner } from '@chakra-ui/react';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { ProtectedRoute } from './components/ProtectedRoute';
@@ -14,29 +14,10 @@ import { MyAccount } from './pages/MyAccount';
 import { Orders } from './pages/Orders';
 import { ProductDetails } from './pages/ProductDetails';
 import { ProductsPage } from './pages/ProductsPage';
-import { getproducts } from './services/products';
 
 function App() {
-  const [allProducts, setAllProducts] = useState([]);
-  const [loadingProducts, setLoadingProducts] = useState(true);
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const { loadingUser } = useContext(userContext);
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const data = await getproducts();
-
-        setAllProducts(data);
-      } catch {
-        console.log('error');
-      } finally {
-        setLoadingProducts(false);
-      }
-    };
-
-    getData();
-  }, []);
 
   const handleIsCheckingOut = () => {
     setIsCheckingOut(true);
@@ -67,20 +48,9 @@ function App() {
           <Route
             element={<AppLayout handleIsCheckingOut={handleIsCheckingOut} />}
           >
-            <Route
-              path="/"
-              element={
-                <Home
-                  allProducts={allProducts}
-                  loadingProducts={loadingProducts}
-                />
-              }
-            />
+            <Route path="/" element={<Home />} />
             <Route path="/products" element={<ProductsPage />} />
-            <Route
-              path="/products/:id"
-              element={<ProductDetails allProducts={allProducts} />}
-            />
+            <Route path="/products/:id" element={<ProductDetails />} />
             <Route path="*" element={<Error404 />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/checkout" element={<Checkout />} />

@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 import { ProductCard } from '../components/ProductCard';
 import { SkeletonCard } from '../components/SkeletonCard';
 import { useDebounce } from '../hooks/useDebounce';
-import { getproducts } from '../services/products';
+import { getAllProducts } from '../services/products';
 import { filterProducts } from '../utils/filterProducts';
 
 export const ProductsPage = () => {
@@ -39,7 +39,7 @@ export const ProductsPage = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const data = await getproducts();
+        const data = await getAllProducts();
         setProducts(data);
       } catch {
         setError(true);

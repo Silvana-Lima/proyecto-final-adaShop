@@ -35,7 +35,7 @@ export const Login = ({ isCheckingOut }) => {
   const navigate = useNavigate();
 
   // States and functions
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
   const [existingUser, setExistingUser] = useState(true);
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -43,7 +43,7 @@ export const Login = ({ isCheckingOut }) => {
 
   // Function to login
   const loginUser = async (data) => {
-    setError(false);
+    setError('');
     try {
       const user = await loginWithEmail(data);
       handleUser(user);
@@ -74,7 +74,7 @@ export const Login = ({ isCheckingOut }) => {
   // Function to create user
   const createUser = async (data) => {
     try {
-      setError(false);
+      setError('');
       const newUser = await registerUser(data);
       handleUser(newUser);
       toast({

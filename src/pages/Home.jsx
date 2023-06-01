@@ -6,11 +6,32 @@ import {
   SimpleGrid,
   Text,
 } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 
 import { ProductCard } from '../components/ProductCard';
 import { SkeletonCard } from '../components/SkeletonCard';
+import { getMultipleProducts } from '../services/products';
 
-export const Home = ({ allProducts, loadingProducts }) => {
+export const Home = () => {
+  const [newProducts, setNewProducts] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(true);
+  const [error, setError] = useState(false);
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = await getMultipleProducts('newProduct', true);
+
+        setNewProducts(data);
+      } catch (error) {
+        setError(true);
+      } finally {
+        setLoadingProducts(false);
+      }
+    };
+
+    getData();
+  }, []);
+
   return (
     <>
       <Container
@@ -37,7 +58,7 @@ export const Home = ({ allProducts, loadingProducts }) => {
       </Container>
       <Container maxW={'100%'}>
         <Heading as="h2" fontSize={['xl', '3xl']} mb={5} fontStyle={'italic'}>
-          Productos recientes
+          Novedades!!
         </Heading>
         {loadingProducts && (
           <SimpleGrid
@@ -61,12 +82,13 @@ export const Home = ({ allProducts, loadingProducts }) => {
           justifyItems={'center'}
         >
           {!loadingProducts &&
-            allProducts.map((product) => (
+            newProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
-          {!loadingProducts && !allProducts.length && (
+          {!loadingProducts && !newProducts.length && (
             <Text>No se encontraron productos</Text>
           )}
+          {error && <Text>hubo un error al obtener los productos</Text>}
         </SimpleGrid>
       </Container>
     </>
