@@ -20,5 +20,6 @@ module.exports = {
     'simple-import-sort/exports': 'error',
     'react/prop-types': 'off',
     'react-refresh/only-export-components': 'off',
+    'react-hooks/exhaustive-deps': 'off',
   },
 };
