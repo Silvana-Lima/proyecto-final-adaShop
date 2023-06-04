@@ -1,4 +1,5 @@
 import {
+  Box,
   Flex,
   HStack,
   Image,
@@ -22,7 +23,11 @@ export const Footer = () => {
     >
       <VStack>
         <Stack as={LinkRoute} to={'/'}>
-          <Image src="/AdaShopLogo.png" h={['40px', '80px']} />
+          <Image
+            src="/AdaShopLogo.png"
+            h={['40px', '80px']}
+            alt="Logo Adashop"
+          />
         </Stack>
 
         <HStack>
@@ -30,18 +35,42 @@ export const Footer = () => {
         </HStack>
       </VStack>
 
-      <HStack>
-        <Link p={3}>
-          <BsFacebook fontSize={20} />
-        </Link>
+      <HStack gap={3}>
+        <Box
+          as={Link}
+          p={3}
+          bg={'orange.400'}
+          borderRadius={'50%'}
+          href="https://www.facebook.com/"
+          target="_blank"
+          _hover={{ bg: 'teal.500' }}
+        >
+          <BsFacebook fontSize={25} />
+        </Box>
 
-        <Link p={3}>
-          <BsInstagram fontSize={20} />
-        </Link>
+        <Box
+          as={Link}
+          p={3}
+          bg={'orange.400'}
+          borderRadius={'50%'}
+          href="https://www.instagram.com/"
+          target="_blank"
+          _hover={{ bg: 'teal.500' }}
+        >
+          <BsInstagram fontSize={25} />
+        </Box>
 
-        <Link p={3}>
-          <BsWhatsapp fontSize={20} />
-        </Link>
+        <Box
+          as={Link}
+          p={3}
+          bg={'orange.400'}
+          borderRadius={'50%'}
+          href="https://www.whatsapp.com/"
+          target="_blank"
+          _hover={{ bg: 'teal.500' }}
+        >
+          <BsWhatsapp fontSize={25} />
+        </Box>
       </HStack>
     </Flex>
   );

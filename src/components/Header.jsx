@@ -25,7 +25,11 @@ export const Header = ({ handleIsCheckingOut }) => {
     <HStack justifyContent={'space-between'} p={5} bg={'teal.300'}>
       <HStack>
         <Stack as={Link} to={'/'}>
-          <Image src="/AdaShopLogo.png" h={['60px', '100px']} />
+          <Image
+            src="/AdaShopLogo.png"
+            h={['60px', '100px']}
+            alt="Logo Adashop"
+          />
         </Stack>
 
         <Show below="md">
