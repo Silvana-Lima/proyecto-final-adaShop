@@ -29,7 +29,7 @@ export const DrawerCart = ({ handleIsCheckingOut }) => {
     <>
       <IconButton
         ref={btnRef}
-        aria-label="Cart"
+        aria-label="Carrito de compras"
         icon={<AiOutlineShoppingCart />}
         colorScheme="teal"
         variant="outline"

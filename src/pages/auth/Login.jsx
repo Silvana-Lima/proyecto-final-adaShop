@@ -157,6 +157,7 @@ export const Login = ({ isCheckingOut }) => {
                   size="sm"
                   fontSize={'20px'}
                   variant="outline"
+                  aria-label="Mostrar contraseña"
                   colorScheme="teal"
                   border={'none'}
                   onClick={() => setShowPassword(!showPassword)}

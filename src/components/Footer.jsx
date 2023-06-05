@@ -25,13 +25,14 @@ export const Footer = () => {
         <Stack as={LinkRoute} to={'/'}>
           <Image
             src="/AdaShopLogo.png"
-            h={['40px', '80px']}
+            h={['60px', '80px']}
             alt="Logo Adashop"
           />
         </Stack>
 
         <HStack>
-          <MdOutlineCopyright /> <Text>2023 Ada Ecommerce.</Text>
+          <MdOutlineCopyright />{' '}
+          <Text fontSize={['11px', '14px']}>2023 Ada Ecommerce.</Text>
         </HStack>
       </VStack>
 
@@ -43,6 +44,7 @@ export const Footer = () => {
           borderRadius={'50%'}
           href="https://www.facebook.com/"
           target="_blank"
+          aria-label="Enlace a Facebook"
           _hover={{ bg: 'teal.500' }}
         >
           <BsFacebook fontSize={25} />
@@ -55,6 +57,7 @@ export const Footer = () => {
           borderRadius={'50%'}
           href="https://www.instagram.com/"
           target="_blank"
+          aria-label="Enlace a Instagram"
           _hover={{ bg: 'teal.500' }}
         >
           <BsInstagram fontSize={25} />
@@ -67,6 +70,7 @@ export const Footer = () => {
           borderRadius={'50%'}
           href="https://www.whatsapp.com/"
           target="_blank"
+          aria-label="Enlace a whatsapp"
           _hover={{ bg: 'teal.500' }}
         >
           <BsWhatsapp fontSize={25} />
